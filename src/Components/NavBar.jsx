@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { CiMenuFries } from 'react-icons/ci';
+import { NavLink } from 'react-router';
 const NavBar = () => {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -24,21 +25,24 @@ const NavBar = () => {
         <p className='text-4xl font-semibold dark:text-white'>Boi<span className='text-blue-700'>Ghor</span></p>
 
         <ul className='items-center gap-[20px] text-[1rem] text-[#424242] dark:text-gray-400 lg:flex hidden'>
-          <li className='before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize'>
+          <NavLink
+            to="/"
+            className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}
+          >
             Home
-          </li>
+          </NavLink>
 
-          <li className='before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize'>
+          <NavLink to="/allbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
             All Books
-          </li>
+          </NavLink>
 
-          <li className='before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize'>
+          <NavLink to="/addbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
             Add Books
-          </li>
+          </NavLink>
 
-          <li className='before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize'>
+          <NavLink to="/borrowedbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
             Borrowed Books
-          </li>
+          </NavLink>
         </ul>
 
         <div className='items-center gap-[10px] flex'>
@@ -91,9 +95,8 @@ const NavBar = () => {
         </div>
 
         <aside
-          className={` ${
-            mobileSidebarOpen ? 'translate-y-0 opacity-100 z-20' : 'translate-y-[200px]  opacity-0 z-[-1]'
-          } lg:hidden shadow-xl bg-white dark:bg-gray-800 boxShadow p-4 text-center absolute top-[65px] right-0 w-full rounded-md transition-all duration-300`}>
+          className={` ${mobileSidebarOpen ? 'translate-y-0 opacity-100 z-20' : 'translate-y-[200px]  opacity-0 z-[-1]'
+            } lg:hidden shadow-xl bg-white dark:bg-gray-800 boxShadow p-4 text-center absolute top-[65px] right-0 w-full rounded-md transition-all duration-300`}>
           <div className='relative mb-5'>
             <input
               className='py-1.5 pr-4 w-full pl-10 rounded-full border border-gray-200 outline-none focus:border-[#3B9DF8]'
@@ -110,21 +113,21 @@ const NavBar = () => {
             </button>
           </div>
           <ul className='items-start gap-[20px] text-[1rem] dark:text-gray-400 text-gray-600 flex flex-col'>
-            <li className='hover:border-b-[#3B9DF8] border-b-[2px] border-transparent transition-all duration-500 cursor-pointer capitalize'>
+            <NavLink to="/" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
               Home
-            </li>
+            </NavLink>
 
-            <li className='hover:border-b-[#3B9DF8] border-b-[2px] border-transparent transition-all duration-500 cursor-poin ter capitalize'>
+            <NavLink to="/allbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
               All Books
-            </li>
+            </NavLink>
 
-            <li className='hover:border-b-[#3B9DF8] border-b-[2px] border-transparent transition-all duration-500 cursor-pointer capitalize'>
+            <NavLink to="/addbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
               Add Books
-            </li>
+            </NavLink>
 
-            <li className='hover:border-b-[#3B9DF8] border-b-[2px] border-transparent transition-all duration-500 cursor-pointer capitalize'>
+            <NavLink to="/borrowedbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
               Borrowed Books
-            </li>
+            </NavLink>
           </ul>
         </aside>
       </nav>
