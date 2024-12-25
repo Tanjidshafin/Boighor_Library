@@ -114,7 +114,7 @@ const Slider = () => {
             style={{ backgroundImage: `url(${slide.image})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <div className='absolute flex items-center justify-center lg:justify-start md:justify-center inset-0 bg-gradient-to-b from-black/50 to-transparent'>
               <div className=' lg:ml-[8rem] p-14'>
-                <p data-aos='fade-right' className='text-white text-2xl md:text-3xl  lg:text-4xl font-bold'>
+                <p data-aos='fade-right' className='text-white text-xl md:text-3xl  lg:text-4xl font-bold'>
                   <Typewriter
                     words={[slide.title]}
                     loop={true}
@@ -125,7 +125,7 @@ const Slider = () => {
                     delaySpeed={1000}
                   />
                 </p>
-                <p data-aos='fade-left' className='mt-4 max-w-xl text-gray-300 sm:text-xl/relaxed'>
+                <p data-aos='fade-left' className='mt-4 text-sm max-w-xl text-gray-300 sm:text-xl/relaxed'>
                   {slide.description}
                 </p>
                 <div className='mt-8  flex flex-wrap md:flex-nowrap gap-4 text-center'>

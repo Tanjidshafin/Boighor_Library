@@ -1,0 +1,175 @@
+import React, { useContext, useState } from 'react'
+import { NavLink } from 'react-router'
+import { AppContext } from '../Context/AppContext'
+
+const AllBooks = () => {
+    const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const { books, categories } = useContext(AppContext)
+    const [viewType, setViewType] = useState('grid');
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [selectedLetter, setSelectedLetter] = useState('');
+    const [sortBy, setSortBy] = useState('name');
+    return (
+        <div>
+            <section
+                className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/6.jpg)] bg-cover bg-center bg-no-repeat"
+            >
+                <div
+                    className="bg-gray-900/75 sm:bg-transparent sm:from-gray-900/95 sm:to-gray-900/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"
+                ></div>
+
+                <div
+                    className="mx-auto md:h-[30rem] justify-center items-center  max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8"
+                >
+                    <div className="max-w-xl flex justify-center items-center text-center ltr:sm:text-left rtl:sm:text-right">
+                        <h1 className="text-2xl flex items-center text-gray-200 gap-3 font-extrabold sm:text-4xl">
+                            ALL
+                            <strong className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-l from-blue-500 to-[#1A365D]"> BOOKS </strong>
+                        </h1>
+
+                    </div>
+                    <div className='text-white'>
+                        <p className='text-xl'><span><NavLink to="/">Home</NavLink></span>  /  <span><NavLink className="text-blue-500">Get Started</NavLink></span></p>
+                    </div>
+                </div>
+
+            </section>
+            <div className="container mx-auto px-4 py-8">
+                <div className="flex flex-col md:flex-row gap-8">
+                    <div className="w-full md:w-64 shrink-0">
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            <h2 className="text-xl font-bold text-gray-800 mb-6">Filters</h2>
+                            <div className="mb-6">
+                                <label className="block text-sm font-medium text-gray-700 mb-2">Sort By</label>
+                                <select
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                    value={sortBy}
+                                    onChange={(e) => setSortBy(e.target.value)}
+                                >
+                                    <option value="name">Name: A-Z</option>
+                                    <option value="name-desc">Name: Z-A</option>
+                                    <option value="rating">Rating: High to Low</option>
+                                    <option value="rating-desc">Rating: Low to High</option>
+                                </select>
+                            </div>
+                            <div className="mb-6">
+                                <h3 className="text-sm font-medium text-gray-700 mb-2">Categories</h3>
+                                <div className="space-y-2">
+                                    {categories.map((category) => (
+                                        <label key={category} className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="category"
+                                                value={category}
+                                                checked={selectedCategory === category}
+                                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                                className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
+                                            />
+                                            <span className="ml-2 text-sm text-gray-600">{category}</span>
+                                        </label>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="mb-6">
+                                <h3 className="text-sm font-medium text-gray-700 mb-2">Filter by Letter</h3>
+                                <div className="flex flex-wrap gap-1">
+                                    {alphabets.map((letter) => (
+                                        <button
+                                            key={letter}
+                                            onClick={() => setSelectedLetter(selectedLetter === letter ? '' : letter)}
+                                            className={`w-7 h-7 text-sm font-medium rounded-md flex items-center justify-center
+                      ${selectedLetter === letter
+                                                    ? 'bg-blue-500 text-white'
+                                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                                        >
+                                            {letter}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="flex-1">
+                        <div className="mb-6 flex items-center justify-between">
+                            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-[#1A365D]">
+                                All Books
+                            </h1>
+                            <div className="flex gap-2">
+                                <button
+                                    onClick={() => setViewType('grid')}
+                                    className={`p-2 rounded-md ${viewType === 'grid'
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                                    </svg>
+                                </button>
+                                <button
+                                    onClick={() => setViewType('list')}
+                                    className={`p-2 rounded-md ${viewType === 'list'
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'}`}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <div className={`${viewType === 'grid'
+                            ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+                            : 'space-y-4'}`}
+                        >
+                            {books.map((book) => (
+                                <div
+                                    key={book._id}
+                                    className={`bg-white rounded-lg shadow-md overflow-hidden
+                  ${viewType === 'list' ? 'flex' : 'flex flex-col'}`}
+                                >
+                                    <div className={`${viewType === 'list' ? 'w-48 shrink-0' : 'w-full'}`}>
+                                        <img
+                                            src={book.image}
+                                            alt={book.name}
+                                            className="w-full h-48 object-cover"
+                                        />
+                                    </div>
+                                    <div className="p-4 flex flex-col flex-1">
+                                        <h3 className="text-lg font-semibold text-gray-800 mb-2">{book.name}</h3>
+                                        <p className="text-gray-600 mb-2">by {book.author_name}</p>
+                                        <div className="flex items-center mb-2">
+                                            {[...Array(5)].map((_, index) => (
+                                                <svg
+                                                    key={index}
+                                                    className={`w-5 h-5 ${index < Math.floor(book.rating)
+                                                        ? 'text-yellow-400'
+                                                        : 'text-gray-300'}`}
+                                                    fill="currentColor"
+                                                    viewBox="0 0 20 20"
+                                                >
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                </svg>
+                                            ))}
+                                            <span className="ml-2 text-gray-600 text-sm">({book.rating})</span>
+                                        </div>
+                                        <span className="text-sm text-blue-500">{book.category}</span>
+                                        <div className="sm:flex sm:items-end sm:justify-end">
+                                            <a
+
+                                                className="block bg-blue-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
+                                            >
+                                                Update
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default AllBooks
