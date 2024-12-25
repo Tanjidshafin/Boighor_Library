@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router';
 import ReactStars from "react-rating-stars-component";
+import { AppContext } from '../Context/AppContext';
 const PerBooks = () => {
     const { id } = useParams();
+    const { borrowBook, books } = useContext(AppContext);
     const [book, setBook] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [activeTab, setActiveTab] = useState('details');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    useEffect(() => {
+        const foundBook = books.find((b) => b._id === id);
+        setBook(foundBook || null);
+    }, [id, books]);
     useEffect(() => {
         const fetchBook = async () => {
             setLoading(true);
@@ -25,6 +30,7 @@ const PerBooks = () => {
         };
         fetchBook();
     }, [id]);
+
 
     if (loading) {
         return <div className="text-center py-8">Loading book details...</div>;
@@ -106,7 +112,7 @@ const PerBooks = () => {
                             <NavLink to="/allbooks" className="flex-1 flex justify-center bg-gradient-to-r from-blue-500 to-blue-600 text-white px-8 py-3 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">
                                 See More
                             </NavLink>
-                            <button className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">
+                            <button onClick={() => borrowBook(book._id)} className="flex-1 bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-3 rounded-lg hover:from-green-600 hover:to-green-700 transition-all duration-300 shadow-lg hover:shadow-xl font-medium">
                                 Borrow Now
                             </button>
                         </div>
