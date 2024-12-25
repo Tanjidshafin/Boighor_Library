@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../Context/AppContext'
 import ReactStars from "react-rating-stars-component";
+import { NavLink } from 'react-router';
 const NewBooks = () => {
     const { books } = useContext(AppContext)
     return (
@@ -48,11 +49,11 @@ const NewBooks = () => {
                         </p>
 
                         <form className="mt-4 flex gap-4">
-                            <button
-                                className="block w-full dark:bg-gray-600 rounded bg-gray-100 px-4 py-3 text-sm font-medium dark:text-gray-300 text-gray-900 transition hover:scale-105"
+                            <NavLink to={`/book/${book._id}`}
+                                className="block dark:bg-gray-600 rounded bg-gray-100 px-4 py-3 text-sm font-medium dark:text-gray-300 text-gray-900 transition hover:scale-105"
                             >
                                 Details
-                            </button>
+                            </NavLink>
 
 
                         </form>
