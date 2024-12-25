@@ -79,7 +79,7 @@ const BorrowedBooks = () => {
 
                     {/* Mobile View */}
                     <div className="md:hidden space-y-4">
-                        <div className="bg-white shadow rounded-lg p-4 border border-gray-200">
+                        <div className="bg-white dark:border-gray-600 dark:bg-gray-800 shadow rounded-lg p-4 border border-gray-200">
                             <div className="flex items-center space-x-4 mb-4">
                                 <img
                                     src=""
@@ -87,18 +87,18 @@ const BorrowedBooks = () => {
                                     className="h-24 w-20 object-cover rounded-md shadow-sm"
                                 />
                                 <div>
-                                    <h3 className="font-medium text-gray-900">title</h3>
-                                    <p className="text-gray-600">category</p>
+                                    <h3 className="font-medium dark:text-gray-300 text-gray-900">title</h3>
+                                    <p className="dark:text-gray-400 text-gray-600">category</p>
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Borrowed Date:</span>
-                                    <span className="text-sm text-gray-900">date</span>
+                                    <span className="text-sm text-gray-500 dark:text-gray-400">Borrowed Date:</span>
+                                    <span className="text-sm dark:text-gray-400 text-gray-900">date</span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-sm text-gray-500">Return Date:</span>
-                                    <span className="text-sm text-gray-900">date</span>
+                                    <span className="text-sm dark:text-gray-400 text-gray-500">Return Date:</span>
+                                    <span className="text-sm dark:text-gray-400 text-gray-900">date</span>
                                 </div>
                                 <button
                                     className="w-full mt-4 inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-150 ease-in-out"

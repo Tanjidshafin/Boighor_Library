@@ -43,9 +43,9 @@ const AllBooks = () => {
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="w-full md:w-64 shrink-0">
                         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                            <button onClick={filterToggle} className="text-xl flex items-center gap-2 font-bold text-gray-800 mb-6 dark:text-gray-200">Filters <span className="md:hidden block"><FaChevronRight /></span> </button>
+                            <button onClick={filterToggle} className={`text-xl flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200`}>Filters <span className="md:hidden block"><FaChevronRight /></span> </button>
                             <div className={`${filter ? "block" : "hidden md:block"}`}>
-                                <div className="mb-6">
+                                <div className="my-6">
                                     <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Sort By</label>
                                     <select
                                         className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
