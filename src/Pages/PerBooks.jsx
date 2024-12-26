@@ -19,7 +19,7 @@ const PerBooks = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await fetch(`http://localhost:5000/book/${id}`);
+                const response = await fetch(`https://boighor-server-neon.vercel.app/book/${id}`);
                 const data = await response.json();
                 setBook(data.data);
             } catch (err) {

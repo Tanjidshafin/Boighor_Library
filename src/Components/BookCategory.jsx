@@ -4,7 +4,7 @@ import { NavLink } from 'react-router';
 
 const BookCategory = () => {
     const { categories } = useContext(AppContext)
-    
+
 
     return (
         <section className="py-16">
@@ -13,8 +13,8 @@ const BookCategory = () => {
                     Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-[#1A365D]">Book Categories</span>
                 </h2>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    {categories.map(category => (<NavLink
-                        
+                    {categories.map(category => (<NavLink to={`/category/${category}`}
+
                         className="relative shadow-lg hover:scale-105 duration-200 block overflow-hidden rounded-lg border dark:border-gray-700 dark:bg-gray-800 border-gray-100 p-4 sm:p-6 lg:p-8"
                     >
                         <span
@@ -33,21 +33,11 @@ const BookCategory = () => {
 
                         <div className="mt-4">
                             <p className="text-pretty text-sm text-gray-500">
-                            Discover amazing books in our {category.toLowerCase()} collection.
+                                Discover amazing books in our {category.toLowerCase()} collection.
                             </p>
                         </div>
 
-                        <dl className="mt-6 flex gap-4 sm:gap-6">
-                            <div className="flex flex-col-reverse">
-                                <dt className="text-sm font-medium text-gray-600">Published</dt>
-                                <dd className="text-xs text-gray-500">31st June, 2021</dd>
-                            </div>
 
-                            <div className="flex flex-col-reverse">
-                                <dt className="text-sm font-medium text-gray-600">Reading time</dt>
-                                <dd className="text-xs text-gray-500">3 minute</dd>
-                            </div>
-                        </dl>
                     </NavLink>
                     ))}
                 </div>

@@ -60,7 +60,7 @@ const AppContextProvider = (props) => {
 
   const fetchBooks = async () => {
     try {
-      const response = await fetch("http://localhost:5000/books");
+      const response = await fetch("https://boighor-server-neon.vercel.app/books");
       const data = await response.json();
       setBooks(data.map((book) => ({ ...book, category: book.category || "Uncategorized" })));
     } catch (err) {
@@ -71,7 +71,7 @@ const AppContextProvider = (props) => {
   const fetchBorrowedBooks = async () => {
     if (!user) return; 
     try {
-      const response = await fetch(`http://localhost:5000/borrowedbooks/${user.uid}`);
+      const response = await fetch(`https://boighor-server-neon.vercel.app/borrowedbooks/${user.uid}`);
       const result = await response.json();
       if (result.success) {
         setBorrowedBooks(result.data);
@@ -94,7 +94,7 @@ const AppContextProvider = (props) => {
       return;
     }
     try {
-      const response = await fetch("http://localhost:5000/borrowbook", {
+      const response = await fetch("https://boighor-server-neon.vercel.app/borrowbook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bookId, userId: user.uid }),
@@ -120,7 +120,7 @@ const AppContextProvider = (props) => {
     }
     newBook.quantity = newBook.quantity || 1;
     try {
-      const response = await fetch("http://localhost:5000/addbook", {
+      const response = await fetch("https://boighor-server-neon.vercel.app/addbook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newBook),
@@ -141,7 +141,7 @@ const AppContextProvider = (props) => {
 
   const returnBook = async (borrowedBookId, bookId) => {
     try {
-      const response = await fetch("http://localhost:5000/returnbook", {
+      const response = await fetch("https://boighor-server-neon.vercel.app/returnbook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ borrowedBookId }),

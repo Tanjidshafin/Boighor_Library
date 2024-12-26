@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { Typewriter } from 'react-simple-typewriter';
+import { AppContext } from '../Context/AppContext';
+import { NavLink } from 'react-router';
 const Slider = () => {
   const [currentSlider, setCurrentSlider] = useState(0);
-
+  const { user } = useContext(AppContext)
   useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -129,10 +131,13 @@ const Slider = () => {
                   {slide.description}
                 </p>
                 <div className='mt-8  flex flex-wrap md:flex-nowrap gap-4 text-center'>
-                  <li
+                  {user ? (<NavLink to="/allbooks"
+                    className='block w-full rounded bg-blue-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto'>
+                    All Books
+                  </NavLink>) : (<NavLink to="/register"
                     className='block w-full rounded bg-blue-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto'>
                     Get Started
-                  </li>
+                  </NavLink>)}
                   <button className='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-blue-600 shadow hover:text-blue-700 focus:outline-none focus:ring active:text-blue-500 sm:w-auto'>
                     Learn More
                   </button>

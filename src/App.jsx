@@ -11,6 +11,8 @@ import Login from './Components/Login';
 import Register from './Components/Register';
 import { useContext } from 'react';
 import { AppContext } from './Context/AppContext';
+import NotAvailable from './Pages/NotAvailable';
+import CategoricalBooks from './Components/CategoricalBooks';
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
         <Route path="/borrowedbooks" element={<PrivateRoute element={<BorrowedBooks />} />} />
         {!user && <Route path="/login" element={<Login />} />}
         {!user && <Route path="/register" element={<Register />} />}
+        <Route path="*" element={<NotAvailable />} />
+        <Route path="/category/:category" element={<CategoricalBooks />} />
       </Routes>
       <Footer />
     </>
