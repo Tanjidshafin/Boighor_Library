@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 import { CiMenuFries } from 'react-icons/ci';
 import { NavLink } from 'react-router';
+import { AppContext } from '../Context/AppContext';
 const NavBar = () => {
+  const { handleLogout, user } = useContext(AppContext)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode');
@@ -36,9 +38,9 @@ const NavBar = () => {
             All Books
           </NavLink>
 
-          <NavLink to="/addbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
+          {user ? (<NavLink to="/addbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
             Add Books
-          </NavLink>
+          </NavLink>) : ""}
 
           <NavLink to="/borrowedbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
             Borrowed Books
@@ -82,11 +84,34 @@ const NavBar = () => {
               <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'></path>
             </svg>
           </label>
-          <button className='btn w-28 lg:flex bg-[#1A365D] text-[#FFFFFF] hover:bg-[#234B82] hidden'>Login</button>
+          <div className="flex items-center space-x-4">
+            {user ? (
+              <>
+                <img
+                  src={user.photoURL || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s'}
+                  alt=""
+                  className="w-10 h-10 rounded-full"
+                />
+                <button
+                  onClick={handleLogout}
+                  className="btn w-28 hidden lg:flex bg-red-600 text-[#FFFFFF] hover:bg-red-700"
+                >
+                  Logout
+                </button>
+              </>
 
-          <button className='btn lg:flex hidden w-28 bg-[#FFFFFF]  border-[#1A365D] text-[#1A365D] hover:bg-gray-300'>
-            Register
-          </button>
+            ) : (
+
+              <>
+
+                <NavLink to="/login" className="btn w-28 lg:flex bg-[#1A365D] text-[#FFFFFF] hover:bg-[#234B82] hidden">Login</NavLink>
+
+                <NavLink to="/register" className="btn lg:flex hidden w-28 bg-[#FFFFFF] border-[#1A365D] text-[#1A365D] hover:bg-gray-300">Register</NavLink>
+
+              </>
+
+            )}
+          </div>
 
           <CiMenuFries
             className='text-[1.8rem] mr-1 text-[#424242]c cursor-pointer lg:hidden flex'
@@ -106,11 +131,30 @@ const NavBar = () => {
             <IoIosSearch className='absolute top-[8px] left-3 text-gray-500 text-[1.3rem]' />
           </div>
           <div className='mb-5 flex justify-center gap-5'>
-            <button className='btn w-28 bg-[#1A365D] text-[#FFFFFF] hover:bg-[#234B82]'>Login</button>
+            {user ? (
+              <button
+                onClick={handleLogout}
+                className="btn w-28 lg:flex bg-red-600 text-[#FFFFFF] hover:bg-red-700"
+              >
+                Logout
+              </button>
+            ) : (
+              <div className="flex gap-4">
+                <NavLink to="/login"
 
-            <button className='btn w-28 bg-[#FFFFFF]  border-[#1A365D] text-[#1A365D] hover:bg-gray-300'>
-              Register
-            </button>
+                  className="btn w-28 bg-[#1A365D] text-[#FFFFFF] hover:bg-[#234B82]"
+                >
+                  Login
+                </NavLink>
+                <NavLink to="/register"
+                  
+                  className="btn w-28 bg-[#FFFFFF] border-[#1A365D] text-[#1A365D] hover:bg-gray-300"
+                >
+                  Register
+                </NavLink>
+              </div>
+            )}
+
           </div>
           <ul className='items-start gap-[20px] text-[1rem] dark:text-gray-400 text-gray-600 flex flex-col'>
             <NavLink to="/" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>

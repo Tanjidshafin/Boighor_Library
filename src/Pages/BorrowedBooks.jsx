@@ -3,7 +3,7 @@ import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
 
 const BorrowedBooks = () => {
-    const { borrowedBooks, fetchBorrowedBooks } = useContext(AppContext);
+    const { borrowedBooks, fetchBorrowedBooks, returnBook } = useContext(AppContext);
 
     useEffect(() => {
         fetchBorrowedBooks();
@@ -98,7 +98,7 @@ const BorrowedBooks = () => {
                                             </div>
                                             <div>
                                                 <button
-                                                    onClick={() => handleReturn(book.bookId)}
+                                                    onClick={() => returnBook(book._id)}
                                                     className="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-150 ease-in-out"
                                                 >
                                                     Return
@@ -148,7 +148,7 @@ const BorrowedBooks = () => {
                                                 </span>
                                             </div>
                                             <button
-                                                onClick={() => handleReturn(book.bookId)}
+                                                onClick={() => returnBook(book._id)}
                                                 className="w-full mt-4 inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-150 ease-in-out"
                                             >
                                                 Return Book

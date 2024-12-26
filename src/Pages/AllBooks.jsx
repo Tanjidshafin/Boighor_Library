@@ -4,7 +4,7 @@ import { AppContext } from '../Context/AppContext'
 import { FaChevronRight } from "react-icons/fa";
 const AllBooks = () => {
     const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    const { books, categories } = useContext(AppContext)
+    const { books, categories, user } = useContext(AppContext)
     const [viewType, setViewType] = useState('grid');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [selectedLetter, setSelectedLetter] = useState('');
@@ -34,7 +34,7 @@ const AllBooks = () => {
 
                     </div>
                     <div className='text-white'>
-                        <p className='text-xl'><span><NavLink to="/">Home</NavLink></span>  /  <span><NavLink className="text-blue-500">Get Started</NavLink></span></p>
+                        <p className='text-xl'><span><NavLink to="/">Home</NavLink></span>  /  <span>{user ? (<NavLink to="/borrowedbooks" className="text-blue-500">Borrowed Book</NavLink>) : (<NavLink to="/register" className="text-blue-500">Get Started</NavLink>)}</span></p>
                     </div>
                 </div>
 
