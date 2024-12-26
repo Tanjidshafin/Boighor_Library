@@ -1,10 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
+import { TailSpin } from 'react-loader-spinner';
 
 const BorrowedBooks = () => {
     const { borrowedBooks, fetchBorrowedBooks, returnBook } = useContext(AppContext);
-
+    const [loading, setLoading] = useState(true);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
     useEffect(() => {
         fetchBorrowedBooks();
     }, []);
@@ -53,7 +59,16 @@ const BorrowedBooks = () => {
                     {borrowedBooks.length > 0 ? (
                         <>
                             {/* Desktop View */}
-                            <div className="hidden md:block">
+                            {loading ? (<div className=" hidden md:flex justify-center items-center h-48">
+                                <TailSpin
+                                    visible={true}
+                                    height="80"
+                                    width="80"
+                                    color="#4fa94d"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                />
+                            </div>) : (<div className="hidden md:block">
                                 <div className="bg-white dark:bg-gray-800 shadow-xl rounded-lg overflow-hidden border dark:border-gray-600 border-gray-200">
                                     <div className="grid grid-cols-6 dark:bg-gray-800 gap-4 px-6 py-4 bg-gray-50 border-b dark:border-gray-600 border-gray-200">
                                         <div className="col-span-2 text-sm font-semibold text-gray-700 dark:text-gray-400">
@@ -107,9 +122,19 @@ const BorrowedBooks = () => {
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </div>)}
+
                             {/* Mobile View */}
-                            <div className="md:hidden space-y-4">
+                            {loading ? (<div className="flex md:hidden justify-center items-center h-48">
+                                                        <TailSpin
+                                                            visible={true}
+                                                            height="80"
+                                                            width="80"
+                                                            color="#4fa94d"
+                                                            ariaLabel="tail-spin-loading"
+                                                            radius="1"
+                                                        />
+                                                    </div>):(<div className="md:hidden space-y-4">
                                 {borrowedBooks.map((book) => (
                                     <div
                                         key={book._id}
@@ -156,7 +181,8 @@ const BorrowedBooks = () => {
                                         </div>
                                     </div>
                                 ))}
-                            </div>
+                            </div>)}
+                            
                         </>
                     ) : (
                         <div className="text-center py-8 text-gray-600">

@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
 import { FaChevronRight } from 'react-icons/fa';
+import { TailSpin } from 'react-loader-spinner';
 
 const AllBooks = () => {
     const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
@@ -12,7 +13,12 @@ const AllBooks = () => {
     const [sortBy, setSortBy] = useState('name');
     const [filter, setFilter] = useState(false);
     const [showAvailable, setShowAvailable] = useState(false);
-
+    const [loading, setLoading] = useState(true);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
     const filterToggle = () => {
         setFilter(!filter);
     };
@@ -154,7 +160,16 @@ const AllBooks = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className={`${viewType === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}`}>
+                        {loading ? (<div className="flex justify-center items-center h-48">
+                            <TailSpin
+                                visible={true}
+                                height="80"
+                                width="80"
+                                color="#4fa94d"
+                                ariaLabel="tail-spin-loading"
+                                radius="1"
+                            />
+                        </div>) : (<div className={`${viewType === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}`}>
                             {filteredBooks.map((book) => (
                                 <div
                                     key={book._id}
@@ -223,7 +238,8 @@ const AllBooks = () => {
                                     </div>
                                 </div>
                             ))}
-                        </div>
+                        </div>)}
+
                     </div>
                 </div>
             </div>

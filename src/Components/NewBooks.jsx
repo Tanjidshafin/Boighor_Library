@@ -1,16 +1,32 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../Context/AppContext'
 import ReactStars from "react-rating-stars-component";
 import { NavLink } from 'react-router';
+import { TailSpin } from 'react-loader-spinner';
 
 const NewBooks = () => {
     const { books } = useContext(AppContext)
+    const [loading, setLoading] = useState(true);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
     const latestBooks = books.slice().reverse().slice(0, 4);
     return (
         <div className='mx-auto my-14 max-w-screen-xl px-4 sm:px-6 lg:px-8'>
             <p className="text-4xl font-extrabold text-center mb-5 text-gray-800 dark:text-white">New <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-[#1A365D]">Books</span> </p>
             <p className='mx-auto mb-12 text-center max-w-[55rem]'>Discover a curated collection of contemporary literature, featuring diverse voices, innovative storytelling, and thought-provoking themes for today's readers. Explore now!</p>
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+            {loading ? (<div className="flex justify-center items-center h-48">
+                <TailSpin
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    ariaLabel="tail-spin-loading"
+                    radius="1"
+                />
+            </div>) : (<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                 {latestBooks.map(book => (
                     <a className="group rounded-xl relative block overflow-hidden" key={book._id}>
                         <button
@@ -80,7 +96,8 @@ const NewBooks = () => {
                         </NavLink>
                     </div>
                 </div>
-            </div>
+            </div>)}
+
         </div>
     )
 }

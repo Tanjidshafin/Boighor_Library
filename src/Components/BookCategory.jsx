@@ -1,10 +1,16 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { AppContext } from '../Context/AppContext';
 import { NavLink } from 'react-router';
+import { TailSpin } from 'react-loader-spinner';
 
 const BookCategory = () => {
     const { categories } = useContext(AppContext)
-
+    const [loading, setLoading] = useState(true);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
 
     return (
         <section className="py-16">
@@ -12,7 +18,16 @@ const BookCategory = () => {
                 <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800 dark:text-white">
                     Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-[#1A365D]">Book Categories</span>
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {loading ? (<div className="flex justify-center items-center h-48">
+                    <TailSpin
+                        visible={true}
+                        height="80"
+                        width="80"
+                        color="#4fa94d"
+                        ariaLabel="tail-spin-loading"
+                        radius="1"
+                    />
+                </div>) : (<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {categories.map(category => (<NavLink to={`/category/${category}`}
 
                         className="relative shadow-lg hover:scale-105 duration-200 block overflow-hidden rounded-lg border dark:border-gray-700 dark:bg-gray-800 border-gray-100 p-4 sm:p-6 lg:p-8"
@@ -40,7 +55,8 @@ const BookCategory = () => {
 
                     </NavLink>
                     ))}
-                </div>
+                </div>)}
+
             </div>
         </section>
     );

@@ -2,9 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../Context/AppContext';
 import { NavLink, useParams } from 'react-router';
 import ReactStars from "react-rating-stars-component";
+import { TailSpin } from 'react-loader-spinner';
 const CategoricalBooks = () => {
     const { category } = useParams();
     const { books } = useContext(AppContext);
+    const [loading, setLoading] = useState(true);
+    React.useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, []);
     const [filteredBooks, setFilteredBooks] = useState([]);
     console.log(books);
     useEffect(() => {
@@ -16,7 +23,16 @@ const CategoricalBooks = () => {
             <h2 className="text-4xl font-extrabold text-center mb-12 text-gray-800 dark:text-white">
                 Books in <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-[#1A365D]">{category}</span> Category
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {loading ? (<div className="flex justify-center items-center h-48">
+                <TailSpin
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    ariaLabel="tail-spin-loading"
+                    radius="1"
+                />
+            </div>) : (<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filteredBooks.length > 0 ? (
                     filteredBooks.map(book => (
                         <a className="group rounded-xl relative block overflow-hidden" key={book._id}>
@@ -69,7 +85,8 @@ const CategoricalBooks = () => {
                 ) : (
                     <p>No books found in this category.</p>
                 )}
-            </div>
+            </div>)}
+
         </div>
     );
 };
