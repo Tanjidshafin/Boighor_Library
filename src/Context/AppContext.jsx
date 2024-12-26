@@ -30,7 +30,7 @@ const AppContextProvider = (props) => {
     onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        localStorage.setItem("user", JSON.stringify(currentUser)); 
+        localStorage.setItem("user", JSON.stringify(currentUser));
       } else {
         setUser(null);
         localStorage.removeItem("user");
@@ -69,8 +69,9 @@ const AppContextProvider = (props) => {
   };
 
   const fetchBorrowedBooks = async () => {
+    if (!user) return; 
     try {
-      const response = await fetch("http://localhost:5000/borrowedbooks");
+      const response = await fetch(`http://localhost:5000/borrowedbooks/${user.uid}`);
       const result = await response.json();
       if (result.success) {
         setBorrowedBooks(result.data);
@@ -83,8 +84,8 @@ const AppContextProvider = (props) => {
   };
 
   const borrowBook = async (bookId) => {
-    if (!bookId) {
-      toast.error("Invalid book ID.");
+    if (!bookId || !user) {
+      toast.error("Invalid book ID or user not logged in.");
       return;
     }
     const alreadyBorrowed = borrowedBooks.some((borrowedBook) => borrowedBook.bookId === bookId);
@@ -96,14 +97,14 @@ const AppContextProvider = (props) => {
       const response = await fetch("http://localhost:5000/borrowbook", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookId }),
+        body: JSON.stringify({ bookId, userId: user.uid }),
       });
       const result = await response.json();
       console.log("Borrow book response:", result);
       if (result.success) {
         await fetchBooks();
         await fetchBorrowedBooks();
-        toast.success("Book borrowed successfully!");
+        toast.success("Book borrowed successfully !");
       } else {
         toast.error(result.message || "Failed to borrow book.");
       }
@@ -112,7 +113,6 @@ const AppContextProvider = (props) => {
       toast.error("An error occurred while borrowing the book.");
     }
   };
-
   const addBook = async (newBook) => {
     if (!newBook.name || !newBook.author_name) {
       toast.error("Book name and author name are required.");

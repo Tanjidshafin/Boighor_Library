@@ -3,6 +3,8 @@ import { IoIosSearch } from 'react-icons/io';
 import { CiMenuFries } from 'react-icons/ci';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
+import 'react-tooltip/dist/react-tooltip.css'
 const NavBar = () => {
   const { handleLogout, user } = useContext(AppContext)
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
@@ -91,7 +93,10 @@ const NavBar = () => {
                   src={user.photoURL || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s'}
                   alt=""
                   className="w-10 h-10 rounded-full"
+                  data-tip={user.displayName || user.email}
+                  data-for="profileTooltip"
                 />
+                <ReactTooltip id="profileTooltip" place="bottom" effect="solid" />
                 <button
                   onClick={handleLogout}
                   className="btn w-28 hidden lg:flex bg-red-600 text-[#FFFFFF] hover:bg-red-700"
@@ -147,7 +152,7 @@ const NavBar = () => {
                   Login
                 </NavLink>
                 <NavLink to="/register"
-                  
+
                   className="btn w-28 bg-[#FFFFFF] border-[#1A365D] text-[#1A365D] hover:bg-gray-300"
                 >
                   Register
