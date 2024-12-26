@@ -26,6 +26,18 @@ const AllBooks = () => {
         .filter((book) => (selectedCategory === 'All' || book.category === selectedCategory))
         .filter((book) => (selectedLetter === '' || book.name.startsWith(selectedLetter)))
         .filter((book) => (!showAvailable || book.quantity > 0));
+    const sortedAndFilteredBooks = filteredBooks.sort((a, b) => {
+        if (sortBy === 'name') {
+            return a.name.localeCompare(b.name);
+        } else if (sortBy === 'name-desc') {
+            return b.name.localeCompare(a.name);
+        } else if (sortBy === 'rating') {
+            return b.rating - a.rating;
+        } else if (sortBy === 'rating-desc') {
+            return a.rating - b.rating;
+        }
+        return 0;
+    });
 
     return (
         <div>
@@ -170,7 +182,7 @@ const AllBooks = () => {
                                 radius="1"
                             />
                         </div>) : (<div className={`${viewType === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}`}>
-                            {filteredBooks.map((book) => (
+                            {sortedAndFilteredBooks.map((book) => (
                                 <div
                                     key={book._id}
                                     className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden ${viewType === 'list' ? 'flex' : 'flex flex-col'}`}
