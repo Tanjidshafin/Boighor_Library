@@ -1,49 +1,52 @@
-import React, { useContext, useState } from 'react'
-import { NavLink } from 'react-router'
-import { AppContext } from '../Context/AppContext'
-import { FaChevronRight } from "react-icons/fa";
+import React, { useContext, useState } from 'react';
+import { NavLink } from 'react-router';
+import { AppContext } from '../Context/AppContext';
+import { FaChevronRight } from 'react-icons/fa';
+
 const AllBooks = () => {
     const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    const { books, categories, user } = useContext(AppContext)
+    const { books, categories, user } = useContext(AppContext);
     const [viewType, setViewType] = useState('grid');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [selectedLetter, setSelectedLetter] = useState('');
     const [sortBy, setSortBy] = useState('name');
-    const [filter, setFilter] = useState(false)
+    const [filter, setFilter] = useState(false);
+    const [showAvailable, setShowAvailable] = useState(false);
+
     const filterToggle = () => {
-        setFilter(!filter)
-    }
+        setFilter(!filter);
+    };
+    const filteredBooks = books
+        .filter((book) => (selectedCategory === 'All' || book.category === selectedCategory))
+        .filter((book) => (selectedLetter === '' || book.name.startsWith(selectedLetter)))
+        .filter((book) => (!showAvailable || book.quantity > 0));
 
     return (
         <div>
             <section
                 className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/6.jpg)] bg-cover bg-center bg-no-repeat"
             >
-                <div
-                    className="bg-gray-900/75 sm:bg-transparent sm:from-gray-900/95 sm:to-gray-900/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"
-                ></div>
+                <div className="bg-gray-900/75 sm:bg-transparent sm:from-gray-900/95 sm:to-gray-900/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
 
-                <div
-                    className="mx-auto md:h-[30rem] justify-center items-center  max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8"
-                >
+                <div className="mx-auto md:h-[30rem] justify-center items-center max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
                     <div className="max-w-xl flex justify-center items-center text-center ltr:sm:text-left rtl:sm:text-right">
                         <h1 className="text-2xl flex items-center text-gray-200 gap-3 font-extrabold sm:text-4xl">
                             ALL
                             <strong className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-l from-blue-500 to-[#1A365D]"> BOOKS </strong>
                         </h1>
-
                     </div>
-                    <div className='text-white'>
-                        <p className='text-xl'><span><NavLink to="/">Home</NavLink></span>  /  <span>{user ? (<NavLink to="/borrowedbooks" className="text-blue-500">Borrowed Book</NavLink>) : (<NavLink to="/register" className="text-blue-500">Get Started</NavLink>)}</span></p>
+                    <div className="text-white">
+                        <p className="text-xl">
+                            <span><NavLink to="/">Home</NavLink></span> / <span>{user ? (<NavLink to="/borrowedbooks" className="text-blue-500">Borrowed Book</NavLink>) : (<NavLink to="/register" className="text-blue-500">Get Started</NavLink>)}</span>
+                        </p>
                     </div>
                 </div>
-
             </section>
             <div className="container mx-auto px-4 py-8">
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="w-full md:w-64 shrink-0">
                         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                            <button onClick={filterToggle} className={`text-xl flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200`}>Filters <span className="md:hidden block"><FaChevronRight /></span> </button>
+                            <button onClick={filterToggle} className="text-xl flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">Filters <span className="md:hidden block"><FaChevronRight /></span></button>
                             <div className={`${filter ? "block" : "hidden md:block"}`}>
                                 <div className="my-6">
                                     <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Sort By</label>
@@ -79,27 +82,27 @@ const AllBooks = () => {
                                 <div className="mb-6">
                                     <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Status</h3>
                                     <div className="space-y-2">
-                                        <label key="" className="flex items-center">
+                                        <label className="flex items-center">
                                             <input
                                                 type="radio"
-                                                name="category"
-                                                value=""
-                                                checked=""
-
+                                                name="status"
+                                                value="all"
+                                                checked={!showAvailable}
+                                                onChange={() => setShowAvailable(false)}
                                                 className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
                                             />
-                                            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Avalaible Books</span>
+                                            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">All Books</span>
                                         </label>
-                                        <label key="" className="flex items-center">
+                                        <label className="flex items-center">
                                             <input
                                                 type="radio"
-                                                name="category"
-                                                value=""
-                                                checked=""
-
+                                                name="status"
+                                                value="available"
+                                                checked={showAvailable}
+                                                onChange={() => setShowAvailable(true)}
                                                 className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
                                             />
-                                            <span className="ml-2 dark:text-gray-400 text-sm text-gray-600">Borrowed Books</span>
+                                            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Available Books</span>
                                         </label>
                                     </div>
                                 </div>
@@ -151,15 +154,11 @@ const AllBooks = () => {
                                 </button>
                             </div>
                         </div>
-                        <div className={`${viewType === 'grid'
-                            ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
-                            : 'space-y-4'}`}
-                        >
-                            {books.map((book) => (
+                        <div className={`${viewType === 'grid' ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6' : 'space-y-4'}`}>
+                            {filteredBooks.map((book) => (
                                 <div
                                     key={book._id}
-                                    className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden
-                  ${viewType === 'list' ? 'flex' : 'flex flex-col'}`}
+                                    className={`bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden ${viewType === 'list' ? 'flex' : 'flex flex-col'}`}
                                 >
                                     <div className={`${viewType === 'list' ? 'w-48 flex items-center shrink-0' : 'w-full'}`}>
                                         <img
@@ -211,13 +210,11 @@ const AllBooks = () => {
                                         </div>
                                         <div className="flex gap-3 mt-4 flex-col sm:flex-row sm:items-end sm:justify-end">
                                             <NavLink to={`/book/${book._id}`}
-
                                                 className="block bg-blue-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
                                             >
                                                 Details
                                             </NavLink>
                                             <a
-
                                                 className="block bg-blue-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
                                             >
                                                 Update
@@ -231,7 +228,7 @@ const AllBooks = () => {
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default AllBooks
+export default AllBooks;
