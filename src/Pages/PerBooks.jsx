@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router';
+
 import ReactStars from "react-rating-stars-component";
 import { AppContext } from '../Context/AppContext';
+import { NavLink, useParams } from 'react-router';
+
 const PerBooks = () => {
     const { id } = useParams();
     const { borrowBook, books } = useContext(AppContext);
@@ -10,27 +12,36 @@ const PerBooks = () => {
     const [activeTab, setActiveTab] = useState('details');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
     useEffect(() => {
         const foundBook = books.find((b) => b._id === id);
-        setBook(foundBook || null);
+        if (foundBook) {
+            setBook(foundBook);
+            setLoading(false);
+        } else {
+            fetchBook();
+        }
     }, [id, books]);
-    useEffect(() => {
-        const fetchBook = async () => {
-            setLoading(true);
-            setError(null);
-            try {
-                const response = await fetch(`https://boighor-server-neon.vercel.app/book/${id}`);
-                const data = await response.json();
-                setBook(data.data);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+    const fetchBook = async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await fetch(`https://boighor-server-neon.vercel.app/book/${id}`);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
-        };
-        fetchBook();
-    }, [id]);
-
+            const data = await response.json();
+            if (data.success) {
+                setBook(data.data);
+            } else {
+                setError("Book not found");
+            }
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (loading) {
         return <div className="text-center py-8">Loading book details...</div>;
@@ -47,7 +58,6 @@ const PerBooks = () => {
     return (
         <div className="mx-auto max-w-screen-xl px-4 py-8">
             <div className="flex flex-col justify-center lg:flex-row gap-8">
-
                 <div className="lg:w-2/5">
                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-300">
                         <img
@@ -89,23 +99,7 @@ const PerBooks = () => {
                             <label className="block dark:text-gray-400 text-gray-700 font-medium mb-2">
                                 Quantity Available: {book.quantity}
                             </label>
-                            <div className="flex items-center gap-4">
-                                <div className="flex items-center border-2 rounded-lg">
-                                    <button
-                                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                        className="px-4 py-2 dark:text-gray-400 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-l-lg transition-colors"
-                                    >
-                                        -
-                                    </button>
-                                    <span className="px-6 py-2 border-x-2 font-medium">{quantity}</span>
-                                    <button
-                                        onClick={() => setQuantity(Math.min(book.quantity, quantity + 1))}
-                                        className="px-4 py-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 dark:text-gray-400 rounded-r-lg transition-colors"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
+
                         </div>
 
                         <div className="flex flex-col w-full md:w-2/3 sm:flex-row gap-4 mb-8">
@@ -121,7 +115,7 @@ const PerBooks = () => {
                             <div className="flex gap-6">
                                 <button
                                     onClick={() => setActiveTab('details')}
-                                    className={`py-2 relative ${activeTab === 'details' ? 'text-blue-600' : 'text-gray-600  dark:text-gray-400 hover:text-gray-800'}`}
+                                    className={`py-2 relative ${activeTab === 'details' ? 'text-blue-600' : 'text-gray-600 dark:text-gray-400 hover:text-gray-800'}`}
                                 >
                                     Details
                                     {activeTab === 'details' && (

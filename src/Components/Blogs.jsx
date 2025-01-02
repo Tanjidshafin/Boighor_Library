@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactStars from "react-rating-stars-component";
+import { NavLink } from 'react-router';
 const Blogs = () => {
     const reviews = [
         {
@@ -72,7 +73,7 @@ const Blogs = () => {
                         </p>
                     </div>
 
-                    <a
+                    <NavLink to="/reviews"
 
                         className="mt-6 inline-flex shrink-0 items-center gap-2 rounded-full border border-blue-500 px-5 py-3 text-blue-500 transition hover:bg-blue-500 hover:text-white md:mt-0"
                     >
@@ -92,7 +93,7 @@ const Blogs = () => {
                                 d="M14 5l7 7m0 0l-7 7m7-7H3"
                             />
                         </svg>
-                    </a>
+                    </NavLink>
                 </div>
 
                 <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3">

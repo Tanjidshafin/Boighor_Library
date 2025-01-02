@@ -26,7 +26,7 @@ const NewBooks = () => {
                     ariaLabel="tail-spin-loading"
                     radius="1"
                 />
-            </div>) : (<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
+            </div>) : (<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5'>
                 {latestBooks.map(book => (
                     <a className="group rounded-xl relative block overflow-hidden" key={book._id}>
                         <button
@@ -78,7 +78,7 @@ const NewBooks = () => {
                 <div className='flex justify-center md:justify-start md:items-end '>
                     <div>
                         <NavLink to="/allbooks"
-                            className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-blue-500 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 group">
+                            className="relative inline-flex items-center justify-start py-3 pl-4 pr-12 overflow-hidden font-semibold text-blue-500 transition-all duration-150 ease-in-out rounded hover:pl-10 hover:pr-6 bg-gray-50 dark:bg-gray-800 group">
                             <span
                                 className="absolute bottom-0 left-0 w-full h-1 transition-all duration-150 ease-in-out bg-blue-500 group-hover:h-full"></span>
                             <span className="absolute right-0 pr-4 duration-200 ease-out group-hover:translate-x-12">

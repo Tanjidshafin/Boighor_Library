@@ -13,6 +13,7 @@ import { useContext } from 'react';
 import { AppContext } from './Context/AppContext';
 import NotAvailable from './Pages/NotAvailable';
 import CategoricalBooks from './Components/CategoricalBooks';
+import Reviews from './Pages/Reviews';
 
 
 function App() {
@@ -30,6 +31,7 @@ function App() {
         {!user && <Route path="/register" element={<Register />} />}
         <Route path="*" element={<NotAvailable />} />
         <Route path="/category/:category" element={<CategoricalBooks />} />
+        <Route path="/reviews" element={<Reviews />} />
       </Routes>
       <Footer />
     </>

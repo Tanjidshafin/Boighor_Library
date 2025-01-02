@@ -3,7 +3,6 @@ import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase.init";
-
 export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
@@ -39,21 +38,15 @@ const AppContextProvider = (props) => {
     });
 
   };
-
-
   const handleLogout = async () => {
-
     try {
       await signOut(auth);
       setUser(null);
       localStorage.removeItem("user");
       toast.success("Successfully logged out!");
     } catch (error) {
-
       console.error("Logout Error:", error);
-
       toast.error("Failed to log out. Please try again.");
-
     }
 
   };
@@ -69,7 +62,7 @@ const AppContextProvider = (props) => {
   };
 
   const fetchBorrowedBooks = async () => {
-    if (!user) return; 
+    if (!user) return;
     try {
       const response = await fetch(`https://boighor-server-neon.vercel.app/borrowedbooks/${user.uid}`);
       const result = await response.json();
@@ -100,11 +93,10 @@ const AppContextProvider = (props) => {
         body: JSON.stringify({ bookId, userId: user.uid }),
       });
       const result = await response.json();
-      console.log("Borrow book response:", result);
       if (result.success) {
         await fetchBooks();
         await fetchBorrowedBooks();
-        toast.success("Book borrowed successfully !");
+        toast.success("Book borrowed successfully!");
       } else {
         toast.error(result.message || "Failed to borrow book.");
       }
@@ -179,6 +171,8 @@ const AppContextProvider = (props) => {
     user,
     handleLogout,
     setUser,
+    fetchBooks,
+    setBooks,
   };
 
   return <AppContext.Provider value={value}>{props.children}</AppContext.Provider>;

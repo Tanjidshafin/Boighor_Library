@@ -4,7 +4,7 @@ import { AppContext } from '../Context/AppContext';
 import { TailSpin } from 'react-loader-spinner';
 
 const BorrowedBooks = () => {
-    const { borrowedBooks, fetchBorrowedBooks, returnBook } = useContext(AppContext);
+    const { borrowedBooks, fetchBorrowedBooks, returnBook, returnDate } = useContext(AppContext);
     const [loading, setLoading] = useState(true);
     React.useEffect(() => {
         setTimeout(() => {
@@ -126,15 +126,15 @@ const BorrowedBooks = () => {
 
                             {/* Mobile View */}
                             {loading ? (<div className="flex md:hidden justify-center items-center h-48">
-                                                        <TailSpin
-                                                            visible={true}
-                                                            height="80"
-                                                            width="80"
-                                                            color="#4fa94d"
-                                                            ariaLabel="tail-spin-loading"
-                                                            radius="1"
-                                                        />
-                                                    </div>):(<div className="md:hidden space-y-4">
+                                <TailSpin
+                                    visible={true}
+                                    height="80"
+                                    width="80"
+                                    color="#4fa94d"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                />
+                            </div>) : (<div className="md:hidden space-y-4">
                                 {borrowedBooks.map((book) => (
                                     <div
                                         key={book._id}
@@ -182,7 +182,7 @@ const BorrowedBooks = () => {
                                     </div>
                                 ))}
                             </div>)}
-                            
+
                         </>
                     ) : (
                         <div className="text-center py-8 text-gray-600">
