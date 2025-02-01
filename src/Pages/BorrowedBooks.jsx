@@ -81,7 +81,7 @@ const BorrowedBooks = () => {
                                             BORROWED DATE
                                         </div>
                                         <div className="text-sm dark:text-gray-400 font-semibold text-gray-700">
-                                            RETURN DATE
+                                            BOOK STATUS
                                         </div>
                                         <div className="text-sm dark:text-gray-400 font-semibold text-gray-700">
                                             ACTION
@@ -166,7 +166,7 @@ const BorrowedBooks = () => {
                                             </div>
                                             <div className="flex justify-between">
                                                 <span className="text-sm dark:text-gray-400 text-gray-500">
-                                                    Return Date:
+                                                Book Status:
                                                 </span>
                                                 <span className="text-sm dark:text-gray-400 text-gray-900">
                                                     {book.returnDate ? formatDate(book.returnDate) : 'Not Returned'}

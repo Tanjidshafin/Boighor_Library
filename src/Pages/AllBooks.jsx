@@ -1,17 +1,19 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
 import { FaChevronRight } from 'react-icons/fa';
 import { TailSpin } from 'react-loader-spinner';
 import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify';
+import axios from 'axios';
 
 const AllBooks = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedBook, setSelectedBook] = useState(null);
     const [updatedBook, setUpdatedBook] = useState({});
+    const [books, setBooks] = useState([])
     const alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-    const { books, categories, user, fetchBooks,setBooks } = useContext(AppContext);
+    const { categories, user, fetchBooks } = useContext(AppContext);
     const [viewType, setViewType] = useState('grid');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [selectedLetter, setSelectedLetter] = useState('');
@@ -24,6 +26,22 @@ const AllBooks = () => {
         setUpdatedBook({ ...book });
         setIsModalOpen(true);
     };
+
+    // Pagination
+    const [count, setCount] = useState(0)
+    const [pageNumber, setPageNumber] = useState(0)
+    const booksPerPage = 6
+    const page = Math.ceil(count / booksPerPage)
+    const updatePageNumber = (num) => {
+        if ((num > (page - 1)) || (0 > num)) { return setPageNumber(0) }
+        setPageNumber(num)
+    }
+    axios.get("https://boighor-server-neon.vercel.app/booksCount")
+        .then(res => setCount(res.data.count))
+    useEffect(() => {
+        axios.get(`https://boighor-server-neon.vercel.app/books?page=${pageNumber}&limit=${booksPerPage}`)
+            .then(res => setBooks(res.data))
+    }, [pageNumber])
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setUpdatedBook({ ...updatedBook, [name]: value });
@@ -228,77 +246,81 @@ const AllBooks = () => {
                                 typeSpeed={70}
                                 deleteSpeed={50}
                                 delaySpeed={1000}
-                            /></div>) : (<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            /></div>) : (<div><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
                                 {sortedAndFilteredBooks.map((book) => (
-                                    <div
-                                        key={book._id}
-                                        className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden"
-                                    >
-                                        <div className="w-full">
-                                            <img
-                                                src={book.image}
-                                                alt={book.name}
-                                                className={`w-full h-48 object-cover`}
-                                            />
-                                        </div>
-                                        <div className="p-4 flex flex-col flex-1">
-                                            <h3 className="text-lg dark:text-gray-300 font-semibold text-gray-800 mb-2">{book.name}</h3>
-                                            <p className="text-gray-600 mb-2 dark:text-gray-400">by {book.author_name}</p>
-                                            <div className="flex items-center mb-2">
-                                                {[...Array(5)].map((_, index) => (
-                                                    <svg
-                                                        key={index}
-                                                        className={`w-5 h-5 ${index < Math.floor(book.rating)
-                                                            ? 'text-yellow-400'
-                                                            : 'text-gray-300'}`}
-                                                        fill="currentColor"
-                                                        viewBox="0 0 20 20"
-                                                    >
-                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                    </svg>
-                                                ))}
-                                                <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">({book.rating})</span>
+                                    <div>
+                                        <div
+                                            key={book._id}
+                                            className="bg-white dark:bg-gray-800 sm:rounded-b-none rounded-lg shadow-md overflow-hidden"
+                                        >
+                                            <div className="w-full">
+                                                <img
+                                                    src={book.image}
+                                                    alt={book.name}
+                                                    className={`w-full h-48 object-cover`}
+                                                />
                                             </div>
-                                            <div className='flex items-center gap-5'>
-                                                <span className="text-sm text-blue-500">{book.category}</span>
-                                                <span
-                                                    className="inline-flex items-center w-14 justify-center rounded-full border border-blue-500 px-2.5 py-0.5 text-blue-700"
-                                                >
-                                                    <svg
-                                                        xmlns="http://www.w3.org/2000/svg"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        strokeWidth="1.5"
-                                                        stroke="currentColor"
-                                                        className="-ms-1 me-1.5 size-4"
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                        />
-                                                    </svg>
+                                            <div className='flex flex-col justify-between'>
+                                                <div className="p-4 flex flex-col flex-1">
+                                                    <h3 className="text-lg dark:text-gray-300 font-semibold text-gray-800 mb-2">{book.name}</h3>
+                                                    <p className="text-gray-600 mb-2 dark:text-gray-400">by {book.author_name}</p>
+                                                    <div className="flex items-center mb-2">
+                                                        {[...Array(5)].map((_, index) => (
+                                                            <svg
+                                                                key={index}
+                                                                className={`w-5 h-5 ${index < Math.floor(book.rating)
+                                                                    ? 'text-yellow-400'
+                                                                    : 'text-gray-300'}`}
+                                                                fill="currentColor"
+                                                                viewBox="0 0 20 20"
+                                                            >
+                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                            </svg>
+                                                        ))}
+                                                        <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">({book.rating})</span>
+                                                    </div>
+                                                    <div className='flex items-center gap-5'>
+                                                        <span className="text-sm text-blue-500">{book.category}</span>
+                                                        <span
+                                                            className="inline-flex items-center w-14 justify-center rounded-full border border-blue-500 px-2.5 py-0.5 text-blue-700"
+                                                        >
+                                                            <svg
+                                                                xmlns="http://www.w3.org/2000/svg"
+                                                                fill="none"
+                                                                viewBox="0 0 24 24"
+                                                                strokeWidth="1.5"
+                                                                stroke="currentColor"
+                                                                className="-ms-1 me-1.5 size-4"
+                                                            >
+                                                                <path
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                                                                />
+                                                            </svg>
 
-                                                    <p className="whitespace-nowrap text-sm">{book.quantity}</p>
-                                                </span>
-                                            </div>
-                                            <div className="flex gap-3 mt-4 flex-col sm:flex-row sm:items-end sm:justify-end">
-                                                <NavLink to={`/book/${book._id}`}
-                                                    className="block bg-blue-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
-                                                >
-                                                    Details
-                                                </NavLink>
-                                                <button onClick={() => openModal(book)}
-                                                    className="block bg-blue-500 px-5 py-3 text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
-                                                >
-                                                    Update
-                                                </button>
+                                                            <p className="whitespace-nowrap text-sm">{book.quantity}</p>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-3 mt-4 justify-center pb-5 px-4 sm:pb-0 sm:px-0 sm:flex-row sm:items-end sm:justify-end">
+                                                    <NavLink to={`/book/${book._id}`}
+                                                        className="block bg-blue-500 px-5 py-3 w-full sm:w-auto text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
+                                                    >
+                                                        Details
+                                                    </NavLink>
+                                                    <button onClick={() => openModal(book)}
+                                                        className="block bg-blue-500 px-5 py-3 w-full sm:w-auto text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
+                                                    >
+                                                        Update
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
-                            </div>)) : (<div className="overflow-x-auto">
+                            </div></div>)) : (<div className="overflow-x-auto">
 
                                 {sortedAndFilteredBooks.length === 0 ? (<div className='text-center py-10
                                 '><Typewriter
@@ -309,7 +331,7 @@ const AllBooks = () => {
                                         typeSpeed={70}
                                         deleteSpeed={50}
                                         delaySpeed={1000}
-                                    /></div>) : (<table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600">
+                                    /></div>) : (<div><table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600">
                                         <thead className="bg-gray-200 dark:bg-gray-700">
                                             <tr>
                                                 <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Image</th>
@@ -360,10 +382,26 @@ const AllBooks = () => {
                                                 </tr>
                                             ))}
                                         </tbody>
-                                    </table>)}
-                            </div>)
-                        )}
+                                    </table></div>)}
 
+                            </div>)
+
+                        )}
+                        <div className='flex justify-center mt-5 items-center gap-5 dark:bg-gray-800 bg-white p-2 shadow-lg rounded-md w-fit mx-auto select-none'>
+                            {/* left arrow */}
+                            <div onClick={() => { updatePageNumber(pageNumber - 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
+                                PREV
+                            </div>
+                            <div className='flex justify-center items-center gap-2 '>
+                                {[...Array(page).keys()].map((item, ind) => <div key={item} onClick={() => { setPageNumber(item) }} className={`cursor-pointer hover:scale-110  border-b-2  text-sm scale-100 transition-all duration-200 px-3 ${pageNumber === item ? 'border-sky-300' : 'border-white'}   font-semibold text-gray-700 dark:text-gray-400    py-[6px] `} >
+                                    {item + 1}
+                                </div>)}
+                            </div>
+                            {/* right arrow */}
+                            <div onClick={() => { updatePageNumber(pageNumber + 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
+                                NEXT
+                            </div>
+                        </div>
                     </div>
                     {isModalOpen && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -408,16 +446,6 @@ const AllBooks = () => {
                                             type="text"
                                             name="category"
                                             value={updatedBook.category || ''}
-                                            onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
-                                        />
-                                    </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Quantity</label>
-                                        <input
-                                            type="number"
-                                            name="quantity"
-                                            value={updatedBook.quantity || ''}
                                             onChange={handleInputChange}
                                             className="w-full px-3 py-2 border rounded-md"
                                         />

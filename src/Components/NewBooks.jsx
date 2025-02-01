@@ -26,7 +26,7 @@ const NewBooks = () => {
                     ariaLabel="tail-spin-loading"
                     radius="1"
                 />
-            </div>) : (<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5'>
+            </div>) : (<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
                 {latestBooks.map(book => (
                     <a className="group rounded-xl relative block overflow-hidden" key={book._id}>
                         <button
@@ -62,7 +62,7 @@ const NewBooks = () => {
                             <h3 className="mt-1.5 dark:text-gray-300  text-md font-medium text-gray-900">{book.author_name}</h3>
 
                             <p className="mt-1.5 dark:text-gray-400  line-clamp-3 text-gray-700">
-                                {book.book_content}
+                                {book.book_content.slice(0,50)} ...
                             </p>
 
                             <form className="mt-4 flex gap-4">
