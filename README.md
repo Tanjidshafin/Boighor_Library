@@ -19,6 +19,7 @@ Boighor is a **Library Management System (LMS)** developed for a well-renowned s
 ✅ Add new books to the collection.  
 ✅ Categorize books by **genres, authors, or categories**.  
 ✅ Update existing book details like **title, author, category, and availability status**.
+✅ **Dark Mode** feature is enabled.
 
 ### 🔄 **Borrowing and Returning Books**
 
