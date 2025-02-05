@@ -170,15 +170,3 @@ This project is licensed under the **MIT License**. See the [`LICENSE`](./LICENS
 
 💻 **Start managing your library efficiently with Boighor!** 🚀  
 ```
-
----
-
-### 🔥 **What's New in This README?**  
-✔ **Eye-catching design** with badges & images 🎨  
-✔ **Clear project overview** with a structured layout 📜  
-✔ **Step-by-step guide** for installation & setup ⚡  
-✔ **Tech stack & dependencies** section with icons 🛠️  
-✔ **Live demo, repository, and license badges** 🔗  
-✔ **Contribution & license details** 📢  
-
-Now, **Boighor’s README** is **engaging, informative, and professional**—ready to impress contributors and users! 🚀
