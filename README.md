@@ -1,6 +1,6 @@
 
 <div align="center">
-  <img src="https://i.ibb.co.com/3530qTZ7/desktop.png" alt="Boighor Banner" width="100%"/>
+  <img src="https://i.ibb.co.com/qLxXKVpj/Screenshot-2025-02-01-201140.png" alt="Boighor Banner" width="100%"/>
 
   <h1>📚 Boighor - Library Management System</h1>
   <p><em>Effortless Library Management | Smart & Intuitive</em></p>
