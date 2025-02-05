@@ -171,7 +171,7 @@ npm start</code></pre>
 
 <h2 align="center">📢 Contributing</h2>
 
-<div align="center">
+<div>
   <p>🛠️ <strong>We welcome contributions!</strong> If you'd like to improve Boighor:</p>
   <ol>
     <li><strong>Fork the repository</strong></li>
