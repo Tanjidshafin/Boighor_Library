@@ -127,7 +127,7 @@
 
 <h3 align="center">🚀 Run the Project Locally</h3>
 
-<div align="center">
+<div>
   <details>
     <summary><strong>Click to expand instructions</strong></summary>
     <ol>
