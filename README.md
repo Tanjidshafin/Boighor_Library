@@ -169,18 +169,75 @@ npm start</code></pre>
 
 <hr style="border: 2px solid #4CAF50; margin: 30px 0;">
 
-<h2 align="center">📢 Contributing</h2>
+<h2 align="center">📢 Contributing to Boighor</h2>
 
-<div>
-  <p>🛠️ <strong>We welcome contributions!</strong> If you'd like to improve Boighor:</p>
-  <ol>
-    <li><strong>Fork the repository</strong></li>
-    <li><strong>Create a feature branch</strong></li>
-    <li><strong>Commit your changes</strong></li>
-    <li><strong>Submit a pull request</strong></li>
-  </ol>
-  <p>Every contribution is highly appreciated! 💙</p>
+<div align="center">
+  <img src="https://img.shields.io/badge/Contributions-Welcome-brightgreen?style=for-the-badge&logo=github" alt="Contributions Welcome"/>
 </div>
+
+<br>
+
+<table align="center">
+  <tr>
+    <td align="center">
+      <img src="https://img.shields.io/badge/1-Fork-blue?style=for-the-badge&logo=github" alt="Step 1"/>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/2-Branch-orange?style=for-the-badge&logo=git" alt="Step 2"/>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/3-Commit-green?style=for-the-badge&logo=git" alt="Step 3"/>
+    </td>
+    <td align="center">
+      <img src="https://img.shields.io/badge/4-Pull%20Request-purple?style=for-the-badge&logo=github" alt="Step 4"/>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">Fork the repository</td>
+    <td align="center">Create a feature branch</td>
+    <td align="center">Commit your changes</td>
+    <td align="center">Submit a pull request</td>
+  </tr>
+</table>
+
+<br>
+
+<div align="center">
+  <details>
+    <summary><strong>📋 Contribution Guidelines</strong></summary>
+    <br>
+    <ol>
+      <li>Ensure your code adheres to the project's coding standards.</li>
+      <li>Write clear, concise commit messages.</li>
+      <li>Include relevant tests for your changes.</li>
+      <li>Update documentation if necessary.</li>
+      <li>Be respectful and collaborative in discussions.</li>
+    </ol>
+  </details>
+</div>
+
+<br>
+
+<div align="center">
+  <a href="https://github.com/yourusername/boighor/issues">
+    <img src="https://img.shields.io/badge/Report%20Bug-red?style=for-the-badge&logo=bug" alt="Report Bug"/>
+  </a>
+  <a href="https://github.com/yourusername/boighor/issues">
+    <img src="https://img.shields.io/badge/Request%20Feature-blue?style=for-the-badge&logo=lightbulb" alt="Request Feature"/>
+  </a>
+</div>
+
+<br>
+
+<p align="center">
+  <strong>Every contribution, no matter how small, is valuable and appreciated! 💙</strong>
+</p>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Thank%20You-Contributors!-ff69b4?style=for-the-badge" alt="Thank You Contributors"/>
+</div>
+
+
 
 <hr style="border: 2px solid #4CAF50; margin: 30px 0;">
 
