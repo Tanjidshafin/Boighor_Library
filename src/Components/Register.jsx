@@ -67,7 +67,7 @@ const Register = () => {
                                         type="text"
                                         id="FirstName"
                                         name="first_name"
-                                        className="border-[#e5eaf2] border-b outline-none px-4 w-[80%] py-3 focus:border-[#3B9DF8] transition-colors duration-300"
+                                        className="border-[#e5eaf2] w-full border-b outline-none px-4 py-3 focus:border-[#3B9DF8] transition-colors duration-300"
                                         value={firstName}
                                         onChange={(e) => setFirstName(e.target.value)}
                                     />
@@ -81,7 +81,7 @@ const Register = () => {
                                         type="text"
                                         id="LastName"
                                         name="last_name"
-                                        className="border-[#e5eaf2] border-b outline-none px-4 w-[80%] py-3 focus:border-[#3B9DF8] transition-colors duration-300"
+                                        className="border-[#e5eaf2] border-b outline-none px-4 w-full py-3 focus:border-[#3B9DF8] transition-colors duration-300"
                                         value={lastName}
                                         onChange={(e) => setLastName(e.target.value)}
                                     />
