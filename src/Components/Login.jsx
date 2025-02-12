@@ -45,7 +45,7 @@ export default function Login() {
     };
 
     return (
-        <div className="flex justify-center md:my-32">
+        <div className="flex justify-center mt-20 md:my-32">
             <div className="max-w-3xl bg-white dark:bg-gray-800 p-6 shadow-md sm:px-8 sm:py-10 lg:px-12 lg:py-16 dark :bg-zinc-900">
                 <div className="flex flex-col justify-between space-x-0 sm:flex-row sm:space-x-12">
                     <div className="mb-8 w-full sm:mb-0 sm:w-1/2">
