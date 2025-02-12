@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaGooglePlay } from "react-icons/fa";
 import { FaAppStoreIos } from "react-icons/fa6";
+import { NavLink } from 'react-router';
 const Footer = () => {
     return (
         <footer className="bg-gray-100 dark:bg-gray-800 mt-10 pt-16 pb-8">
@@ -20,10 +21,10 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-300 mb-4">Quick Links</h3>
                         <ul className="space-y-2">
-                            <li><a className="text-gray-600 dark:text-gray-400 hover:text-blue-500">Home</a></li>
-                            <li><a className="text-gray-600 dark:text-gray-400 hover:text-blue-500">Browse Books</a></li>
-                            <li><a className="text-gray-600 dark:text-gray-400 hover:text-blue-500">About Us</a></li>
-                            <li><a className="text-gray-600 dark:text-gray-400 hover:text-blue-500">Contact</a></li>
+                            <li><NavLink to="/notavailable" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">Home</NavLink></li>
+                            <li><NavLink to="/notavailable" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">Browse Books</NavLink></li>
+                            <li><NavLink to="/notavailable" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">About Us</NavLink></li>
+                            <li><NavLink to="/notavailable" className="text-gray-600 dark:text-gray-400 hover:text-blue-500">Contact</NavLink></li>
                         </ul>
                     </div>
 
@@ -49,11 +50,11 @@ const Footer = () => {
                         </div>
                         <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-300 mb-4">Download Our App</h3>
                         <div className="flex space-x-4">
-                            <a className="bg-blue-500 font-semibold text-white px-4 py-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-300 dark:hover:text-gray-700 transition duration-300 flex gap-2 items-center">
+                            <a href='https://www.apple.com/app-store/' className="bg-blue-500 font-semibold text-white px-4 py-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-300 dark:hover:text-gray-700 transition duration-300 flex gap-2 items-center">
                                 <FaAppStoreIos />
                                 App Store
                             </a>
-                            <a className="bg-blue-500 font-semibold gap-2 text-white px-4 py-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-300 dark:hover:text-gray-700 transition duration-300 flex items-center">
+                            <a href="https://play.google.com/store/apps?hl=en&pli=1" className="bg-blue-500 font-semibold gap-2 text-white px-4 py-2 rounded-md hover:bg-gray-800 dark:hover:bg-gray-300 dark:hover:text-gray-700 transition duration-300 flex items-center">
                                 <FaGooglePlay />
                                 <span>Google Play</span>
                             </a>
