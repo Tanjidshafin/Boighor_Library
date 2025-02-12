@@ -1,187 +1,288 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { IoIosSearch } from 'react-icons/io';
-import { CiMenuFries } from 'react-icons/ci';
-import { NavLink } from 'react-router';
-import { AppContext } from '../Context/AppContext';
-import { Tooltip as ReactTooltip } from 'react-tooltip';
-import 'react-tooltip/dist/react-tooltip.css'
+"use client"
+
+import { useContext, useEffect, useState, useRef } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { CiMenuFries } from "react-icons/ci"
+import { FiSun, FiMoon } from "react-icons/fi"
+import { AppContext } from "../Context/AppContext"
+import { Tooltip as ReactTooltip } from "react-tooltip"
+import "react-tooltip/dist/react-tooltip.css"
+import { NavLink, useLocation } from "react-router"
+
 const NavBar = () => {
   const { handleLogout, user } = useContext(AppContext)
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    return savedMode === 'true';
-  });
+    const savedMode = localStorage.getItem("darkMode")
+    return savedMode === "true"
+  })
+  const [isVisible, setIsVisible] = useState(true)
+  const [lastScrollY, setLastScrollY] = useState(0)
+  const [isOnSlider, setIsOnSlider] = useState(false)
+  const location = useLocation()
+  const navRef = useRef(null)
+
   const toggleDarkMode = () => {
-    const newDarkMode = !isDarkMode;
-    setIsDarkMode(newDarkMode);
-    document.documentElement.setAttribute('data-theme', newDarkMode ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-mode', newDarkMode ? 'dark' : 'light');
-    localStorage.setItem('darkMode', newDarkMode);
-  };
+    const newDarkMode = !isDarkMode
+    setIsDarkMode(newDarkMode)
+    document.documentElement.setAttribute("data-theme", newDarkMode ? "dark" : "light")
+    document.documentElement.setAttribute("data-mode", newDarkMode ? "dark" : "light")
+    localStorage.setItem("darkMode", newDarkMode)
+  }
+
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-mode', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
+    document.documentElement.setAttribute("data-theme", isDarkMode ? "dark" : "light")
+    document.documentElement.setAttribute("data-mode", isDarkMode ? "dark" : "light")
+  }, [isDarkMode])
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      if (currentScrollY > lastScrollY) {
+        setIsVisible(false)
+      } else {
+        setIsVisible(true)
+      }
+      setLastScrollY(currentScrollY)
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [lastScrollY])
+
+  useEffect(() => {
+    setMobileSidebarOpen(false)
+  }, [])
+
+  useEffect(() => {
+    const sliderElement = document.querySelector(".slider-component")
+    if (!sliderElement) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsOnSlider(entry.isIntersecting)
+      },
+      { threshold: 0 },
+    )
+
+    observer.observe(sliderElement)
+
+    return () => observer.disconnect()
+  }, [])
+
+  const navBackground = isOnSlider ? "bg-transparent" : isDarkMode ? "bg-gray-900" : "bg-white"
+  const textColor = isOnSlider ? "text-white" : isDarkMode ? "text-white" : "text-gray-800"
+
   return (
-    <div className='mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8'>
-      <nav className='flex items-center justify-between w-full relative bg-transparent boxShadow rounded-full px-[10px] py-[8px]'>
-        <p className='text-4xl font-semibold dark:text-white'>Boi<span className='text-blue-700'>Ghor</span></p>
-
-        <ul className='items-center gap-[20px] text-[1rem] text-[#424242] dark:text-gray-400 lg:flex hidden'>
-          <NavLink
-            to="/"
-            className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}
-          >
-            Home
-          </NavLink>
-
-          <NavLink to="/allbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
-            All Books
-          </NavLink>
-
-          {user ? (<NavLink to="/addbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
-            Add Books
-          </NavLink>) : ""}
-
-          <NavLink to="/borrowedbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full" : ""}`}>
-            Borrowed Books
-          </NavLink>
-        </ul>
-
-        <div className='items-center gap-[10px] flex'>
-          <label className='grid cursor-pointer place-items-center'>
-            <input
-              checked={isDarkMode}
-              onChange={toggleDarkMode}
-              type='checkbox'
-              value='synthwave'
-              className='toggle theme-controller bg-base-content col-span-2 col-start-1 row-start-1'
-            />
-            <svg
-              className='stroke-base-100 fill-base-100 col-start-1 row-start-1'
-              xmlns='http://www.w3.org/2000/svg'
-              width='14'
-              height='14'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'>
-              <circle cx='12' cy='12' r='5' />
-              <path d='M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4' />
-            </svg>
-            <svg
-              className='stroke-base-100 fill-base-100 col-start-2 row-start-1'
-              xmlns='http://www.w3.org/2000/svg'
-              width='14'
-              height='14'
-              viewBox='0 0 24 24'
-              fill='none'
-              stroke='currentColor'
-              strokeWidth='2'
-              strokeLinecap='round'
-              strokeLinejoin='round'>
-              <path d='M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'></path>
-            </svg>
-          </label>
-          <div className="flex items-center space-x-4">
-            {user ? (
-              <>
-                <img
-                  src={user.photoURL || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s'}
-                  alt=""
-                  className="w-10 h-10 rounded-full"
-                  data-tip={user.displayName || user.email}
-                  data-for="profileTooltip"
-                />
-                <ReactTooltip id="profileTooltip" place="bottom" effect="solid" />
-                <button
-                  onClick={handleLogout}
-                  className="btn w-28 hidden lg:flex bg-red-600 text-[#FFFFFF] hover:bg-red-700"
-                >
-                  Logout
-                </button>
-              </>
-
-            ) : (
-
-              <>
-
-                <NavLink to="/login" className="btn w-28 lg:flex bg-[#1A365D] text-[#FFFFFF] hover:bg-[#234B82] hidden">Login</NavLink>
-
-                <NavLink to="/register" className="btn lg:flex hidden w-28 bg-[#FFFFFF] border-[#1A365D] text-[#1A365D] hover:bg-gray-300">Register</NavLink>
-
-              </>
-
-            )}
-          </div>
-
-          <CiMenuFries
-            className='text-[1.8rem] mr-1 text-[#424242]c cursor-pointer lg:hidden flex'
-            onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
-          />
-        </div>
-
-        <aside
-          className={` ${mobileSidebarOpen ? 'translate-y-0 opacity-100 z-20' : 'translate-y-[200px]  opacity-0 z-[-1]'
-            } lg:hidden shadow-xl bg-white dark:bg-gray-800 boxShadow p-4 text-center absolute top-[65px] right-0 w-full rounded-md transition-all duration-300`}>
-          <div className='relative mb-5'>
-            <input
-              className='py-1.5 pr-4 w-full pl-10 rounded-full border border-gray-200 outline-none focus:border-[#3B9DF8]'
-              placeholder='Search...'
-            />
-
-            <IoIosSearch className='absolute top-[8px] left-3 text-gray-500 text-[1.3rem]' />
-          </div>
-          <div className='mb-5 flex justify-center gap-5'>
-            {user ? (
-              <button
-                onClick={handleLogout}
-                className="btn w-28 lg:flex bg-red-600 text-[#FFFFFF] hover:bg-red-700"
-              >
-                Logout
-              </button>
-            ) : (
-              <div className="flex gap-4">
-                <NavLink to="/login"
-
-                  className="btn w-28 bg-[#1A365D] text-[#FFFFFF] hover:bg-[#234B82]"
-                >
-                  Login
-                </NavLink>
-                <NavLink to="/register"
-
-                  className="btn w-28 bg-[#FFFFFF] border-[#1A365D] text-[#1A365D] hover:bg-gray-300"
-                >
-                  Register
-                </NavLink>
+    <AnimatePresence>
+      {isVisible && (
+        <motion.nav
+          ref={navRef}
+          initial={{ opacity: 0, y: -100 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -100 }}
+          transition={{ duration: 0.3 }}
+          className={`fixed top-0 left-0 right-0 z-50 shadow-lg transition-colors duration-300 ${navBackground}`}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center justify-between h-16">
+              <div className="flex-shrink-0">
+                <p className={`text-2xl font-semibold ${textColor}`}>
+                  Boi<span className="text-yellow-300">Ghor</span>
+                </p>
               </div>
-            )}
+              <div className="hidden md:block">
+                <div className="ml-10 flex items-baseline space-x-4">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 text-white` : `${textColor} hover:bg-blue-500 hover:text-white`
+                      }`
+                    }
+                  >
+                    Home
+                  </NavLink>
+                  <NavLink
+                    to="/allbooks"
+                    className={({ isActive }) =>
+                      `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                      }`
+                    }
+                  >
+                    All Books
+                  </NavLink>
+                  {user && (
+                    <>
+                      <NavLink
+                        to="/addbooks"
+                        className={({ isActive }) =>
+                          `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                          }`
+                        }
+                      >
+                        Add Books
+                      </NavLink>
+                      <NavLink
+                        to="/borrowedbooks"
+                        className={({ isActive }) =>
+                          `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                          }`
+                        }
+                      >
+                        Borrowed Books
+                      </NavLink>
+                    </>
+                  )}
 
+                </div>
+              </div>
+              <div className="flex items-center">
+                <motion.button
+                  onClick={toggleDarkMode}
+                  className={`p-2 rounded-full ${isDarkMode ? "bg-gray-800" : "bg-gray-200 text-gray-500"} mr-4`}
+                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    <motion.div
+                      key={isDarkMode ? "moon" : "sun"}
+                      initial={{ y: -20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: 20, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {isDarkMode ? <FiMoon size={20} /> : <FiSun size={20} />}
+                    </motion.div>
+                  </AnimatePresence>
+                </motion.button>
+                {user ? (
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={
+                        user.photoURL ||
+                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6LXNJFTmLzCoExghcATlCWG85kI8dsnhJng&s"
+                      }
+                      alt=""
+                      className="w-8 h-8 rounded-full"
+                      data-tip={user.displayName || user.email}
+                      data-for="profileTooltip"
+                    />
+                    <ReactTooltip id="profileTooltip" place="bottom" effect="solid" />
+                    <button
+                      onClick={handleLogout}
+                      className={`hidden md:block bg-red-600 hover:bg-red-700 ${textColor} font-bold py-2 px-4 rounded`}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  <div className="hidden md:flex space-x-4">
+                    <NavLink
+                      to="/login"
+                      className={`bg-white text-blue-600 hover:bg-blue-100 font-bold py-2 px-4 rounded ${isOnSlider ? "bg-opacity-20 hover:bg-opacity-30" : ""}`}
+                    >
+                      Login
+                    </NavLink>
+                    <NavLink
+                      to="/register"
+                      className={`bg-yellow-400 hover:bg-yellow-500 text-blue-800 font-bold py-2 px-4 rounded ${isOnSlider ? "bg-opacity-20 hover:bg-opacity-30" : ""}`}
+                    >
+                      Register
+                    </NavLink>
+                  </div>
+                )}
+                <div className="md:hidden flex items-center">
+                  <button
+                    onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
+                    className={`${textColor} hover:text-blue-200 focus:outline-none focus:text-blue-200`}
+                  >
+                    <CiMenuFries className="h-6 w-6" />
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <ul className='items-start gap-[20px] text-[1rem] dark:text-gray-400 text-gray-600 flex flex-col'>
-            <NavLink to="/" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
-              Home
-            </NavLink>
 
-            <NavLink to="/allbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
-              All Books
-            </NavLink>
+          <AnimatePresence>
+            {mobileSidebarOpen && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+                className={`md:hidden ${isDarkMode ? "bg-gray-800" : "bg-white"}`}
+              >
+                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                  <NavLink
+                    to="/"
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                      }`
+                    }
+                  >
+                    Home
+                  </NavLink>
+                  <NavLink
+                    to="/allbooks"
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                      }`
+                    }
+                  >
+                    All Books
+                  </NavLink>
+                  {user && (
+                    <NavLink
+                      to="/addbooks"
+                      className={({ isActive }) =>
+                        `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                        }`
+                      }
+                    >
+                      Add Books
+                    </NavLink>
+                  )}
+                  <NavLink
+                    to="/borrowedbooks"
+                    className={({ isActive }) =>
+                      `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                      }`
+                    }
+                  >
+                    Borrowed Books
+                  </NavLink>
+                  {user ? (
+                    <button
+                      onClick={handleLogout}
+                      className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium ${textColor} hover:bg-blue-500 hover:text-white`}
+                    >
+                      Logout
+                    </button>
+                  ) : (
+                    <>
+                      <NavLink
+                        to="/login"
+                        className={`block px-3 py-2 rounded-md text-base font-medium ${textColor} hover:bg-blue-500 hover:text-white`}
+                      >
+                        Login
+                      </NavLink>
+                      <NavLink
+                        to="/register"
+                        className={`block px-3 py-2 rounded-md text-base font-medium ${textColor} hover:bg-blue-500 hover:text-white`}
+                      >
+                        Register
+                      </NavLink>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.nav>
+      )}
+    </AnimatePresence>
+  )
+}
 
-            <NavLink to="/addbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
-              Add Books
-            </NavLink>
+export default NavBar
 
-            <NavLink to="/borrowedbooks" className={({ isActive }) => `before:w-0 hover:before:w-full before:bg-[#3B9DF8] before:h-[2px] before:transition-all before:duration-300 before:absolute relative before:rounded-full before:bottom-[-2px] hover:text-[#3B9DF8] transition-all duration-300 before:left-0 cursor-pointer capitalize ${isActive ? "before:w-full px-4" : ""}`}>
-              Borrowed Books
-            </NavLink>
-          </ul>
-        </aside>
-      </nav>
-    </div>
-  );
-};
-
-export default NavBar;

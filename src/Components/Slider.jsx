@@ -68,7 +68,7 @@ const Slider = () => {
   }, [nextSlider]);
 
   return (
-    <div className='h-[40rem] lg:rounded-2xl max-w-screen-2xl mx-auto w-full md:h-[30rem] lg:h-[52rem] relative overflow-hidden'>
+    <div className='h-[40rem] mt-20 max-w-screen-2xl mx-auto w-full md:h-[30rem] lg:h-[52rem] relative overflow-hidden'>
       <button
         onClick={prevSlider}
         className='absolute top-1/2 bg-white left-3 z-50 flex justify-center items-center rounded-full w-6 h-6 md:w-8 md:h-8'>
