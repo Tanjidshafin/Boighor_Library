@@ -88,7 +88,7 @@ const NavBar = () => {
             <div className="flex items-center justify-between h-16">
               <div className="flex-shrink-0">
                 <p className={`text-2xl font-semibold ${textColor}`}>
-                  Boi<span className="text-yellow-300">Ghor</span>
+                  Boi<span className="text-blue-500">Ghor</span>
                 </p>
               </div>
               <div className="hidden md:block">
@@ -105,7 +105,7 @@ const NavBar = () => {
                   <NavLink
                     to="/allbooks"
                     className={({ isActive }) =>
-                      `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                      `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 text-white` : `${textColor} hover:bg-blue-500 hover:text-white`
                       }`
                     }
                   >
@@ -116,7 +116,7 @@ const NavBar = () => {
                       <NavLink
                         to="/addbooks"
                         className={({ isActive }) =>
-                          `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                          `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 text-white` : `${textColor} hover:bg-blue-500 hover:text-white`
                           }`
                         }
                       >
@@ -125,7 +125,7 @@ const NavBar = () => {
                       <NavLink
                         to="/borrowedbooks"
                         className={({ isActive }) =>
-                          `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                          `px-3 py-2 rounded-md text-sm font-medium ${isActive ? `bg-blue-700 text-white` : `${textColor} hover:bg-blue-500 hover:text-white`
                           }`
                         }
                       >
@@ -170,7 +170,7 @@ const NavBar = () => {
                     <ReactTooltip id="profileTooltip" place="bottom" effect="solid" />
                     <button
                       onClick={handleLogout}
-                      className={`hidden md:block bg-red-600 hover:bg-red-700 ${textColor} font-bold py-2 px-4 rounded`}
+                      className={`hidden md:block bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded`}
                     >
                       Logout
                     </button>
@@ -179,16 +179,21 @@ const NavBar = () => {
                   <div className="hidden md:flex space-x-4">
                     <NavLink
                       to="/login"
-                      className={`bg-white text-blue-600 hover:bg-blue-100 font-bold py-2 px-4 rounded ${isOnSlider ? "bg-opacity-20 hover:bg-opacity-30" : ""}`}
+                      className={`border border-blue-300 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-800 
+  font-semibold py-2 px-4 rounded transition 
+  ${isOnSlider ? "bg-opacity-20 hover:bg-opacity-30" : "bg-transparent"}`}
                     >
                       Login
                     </NavLink>
+
                     <NavLink
                       to="/register"
-                      className={`bg-yellow-400 hover:bg-yellow-500 text-blue-800 font-bold py-2 px-4 rounded ${isOnSlider ? "bg-opacity-20 hover:bg-opacity-30" : ""}`}
+                      className={`bg-blue-500 hover:bg-blue-600 text-white dark:text-gray-200 font-semibold py-2 px-4 rounded transition 
+  ${isOnSlider ? "bg-opacity-20 hover:bg-opacity-30" : ""}`}
                     >
                       Register
                     </NavLink>
+
                   </div>
                 )}
                 <div className="md:hidden flex items-center">
@@ -232,25 +237,28 @@ const NavBar = () => {
                     All Books
                   </NavLink>
                   {user && (
-                    <NavLink
-                      to="/addbooks"
-                      className={({ isActive }) =>
-                        `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
-                        }`
-                      }
-                    >
-                      Add Books
-                    </NavLink>
+                    <>
+                      <NavLink
+                        to="/addbooks"
+                        className={({ isActive }) =>
+                          `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                          }`
+                        }
+                      >
+                        Add Books
+                      </NavLink>
+                      <NavLink
+                        to="/borrowedbooks"
+                        className={({ isActive }) =>
+                          `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
+                          }`
+                        }
+                      >
+                        Borrowed Books
+                      </NavLink>
+                    </>
                   )}
-                  <NavLink
-                    to="/borrowedbooks"
-                    className={({ isActive }) =>
-                      `block px-3 py-2 rounded-md text-base font-medium ${isActive ? `bg-blue-700 ${textColor}` : `${textColor} hover:bg-blue-500 hover:text-white`
-                      }`
-                    }
-                  >
-                    Borrowed Books
-                  </NavLink>
+
                   {user ? (
                     <button
                       onClick={handleLogout}

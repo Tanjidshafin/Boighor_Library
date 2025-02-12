@@ -3,7 +3,7 @@ import { NavLink } from 'react-router'
 
 const NotAvailable = () => {
     return (
-        <div className="flex h-screen flex-col dark:bg-gray-800 bg-white">
+        <div className="flex h-screen flex-col mt-18 dark:bg-gray-800 bg-white">
             <img
                 src="https://htmldemo.net/boighor/boighor/images/bg/3.jpg"
                 alt=""
