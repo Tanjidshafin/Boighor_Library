@@ -138,9 +138,9 @@ const Slider = () => {
                     className='block w-full rounded bg-blue-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-blue-700 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto'>
                     Get Started
                   </NavLink>)}
-                  <button className='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-blue-600 shadow hover:text-blue-700 focus:outline-none focus:ring active:text-blue-500 sm:w-auto'>
+                  <NavLink to="/not-available" className='block w-full rounded bg-white px-12 py-3 text-sm font-medium text-blue-600 shadow hover:text-blue-700 focus:outline-none focus:ring active:text-blue-500 sm:w-auto'>
                     Learn More
-                  </button>
+                  </NavLink>
                 </div>
               </div>
             </div>
