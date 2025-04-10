@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronRight, FaFilter, FaSearch, FaSort } from 'react-icons/fa';
 import { TailSpin } from 'react-loader-spinner';
 import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify';
@@ -96,35 +96,60 @@ const AllBooks = () => {
 
     return (
         <div>
-            <section
-                className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/6.jpg)] bg-cover bg-center bg-no-repeat"
-            >
-                <div className="bg-gray-900/75 sm:bg-transparent sm:from-gray-900/95 sm:to-gray-900/25 ltr:sm:bg-gradient-to-r rtl:sm:bg-gradient-to-l"></div>
+            <section className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/6.jpg)] bg-cover bg-center bg-no-repeat">
+                <div className="absolute inset-0 bg-gray-900/80 dark:bg-gray-950/90"></div>
 
-                <div className="mx-auto md:h-[30rem] justify-center items-center max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
-                    <div className="max-w-xl flex justify-center items-center text-center ltr:sm:text-left rtl:sm:text-right">
-                        <h1 className="text-2xl flex items-center text-gray-200 gap-3 font-extrabold sm:text-4xl">
+                <div className="relative mx-auto md:h-[30rem] justify-center items-center max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
+                    <div className="max-w-xl flex justify-center items-center text-center">
+                        <h1 className="text-3xl flex flex-col md:flex-row items-center text-white gap-3 font-extrabold sm:text-5xl">
                             ALL
-                            <strong className="block font-extrabold text-transparent bg-clip-text bg-gradient-to-l from-blue-500 to-[#1A365D]"> BOOKS </strong>
+                            <span className="font-extrabold text-blue-300 relative">
+                                BOOKS
+                                <span className="absolute -bottom-2 left-0 w-full h-1 bg-blue-400"></span>
+                            </span>
                         </h1>
                     </div>
-                    <div className="text-white">
-                        <p className="text-xl">
-                            <span><NavLink to="/">Home</NavLink></span> / <span>{user ? (<NavLink to="/borrowedbooks" className="text-blue-500">Borrowed Book</NavLink>) : (<NavLink to="/register" className="text-blue-500">Get Started</NavLink>)}</span>
+                    <div className="text-white mt-4">
+                        <p className="text-xl flex items-center gap-2">
+                            <NavLink to="/" className="hover:text-blue-300 transition-colors">Home</NavLink>
+                            <span className="text-blue-300">/</span>
+                            {user ? (
+                                <NavLink to="/borrowedbooks" className="text-blue-300 hover:text-blue-200 transition-colors">
+                                    Borrowed Books
+                                </NavLink>
+                            ) : (
+                                <NavLink to="/register" className="text-blue-300 hover:text-blue-200 transition-colors">
+                                    Get Started
+                                </NavLink>
+                            )}
                         </p>
                     </div>
                 </div>
             </section>
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-12">
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="w-full md:w-64 shrink-0">
-                        <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
-                            <button onClick={filterToggle} className="text-xl flex items-center gap-2 font-bold text-gray-800 dark:text-gray-200">Filters <span className="md:hidden block"><FaChevronRight /></span></button>
-                            <div className={`${filter ? "block" : "hidden md:block"}`}>
+                        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
+                            <button 
+                                onClick={filterToggle} 
+                                className="text-xl flex items-center gap-2 font-bold text-gray-800 dark:text-white mb-4 w-full justify-between"
+                            >
+                                <div className="flex items-center gap-2">
+                                    <FaFilter className="text-blue-600 dark:text-blue-400" />
+                                    <span>Filters</span>
+                                </div>
+                                <span className="md:hidden block">
+                                    <FaChevronRight className={`transition-transform duration-300 ${filter ? "rotate-90" : ""}`} />
+                                </span>
+                            </button>
+                            <div className={`${filter ? "block" : "hidden md:block"} space-y-6`}>
                                 <div className="my-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Sort By</label>
+                                    <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300 flex items-center gap-2">
+                                        <FaSort className="text-blue-600 dark:text-blue-400" />
+                                        Sort By
+                                    </label>
                                     <select
-                                        className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                                        className="w-full p-3 border border-blue-200 dark:border-blue-800 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white transition-all duration-200"
                                         value={sortBy}
                                         onChange={(e) => setSortBy(e.target.value)}
                                     >
@@ -135,8 +160,24 @@ const AllBooks = () => {
                                     </select>
                                 </div>
                                 <div className="mb-6">
-                                    <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Categories</h3>
-                                    <div className="space-y-2">
+                                    <h3 className="text-sm font-medium text-gray-700 mb-3 dark:text-gray-300 flex items-center gap-2">
+                                        <span className="w-6 h-6 flex items-center justify-center bg-blue-600 dark:bg-blue-700 text-white rounded-full text-xs">
+                                            C
+                                        </span>
+                                        Categories
+                                    </h3>
+                                    <div className="space-y-3 pl-2 border-l-2 border-blue-200 dark:border-blue-800">
+                                        <label className="flex items-center">
+                                            <input
+                                                type="radio"
+                                                name="category"
+                                                value="All"
+                                                checked={selectedCategory === 'All'}
+                                                onChange={(e) => setSelectedCategory(e.target.value)}
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600"
+                                            />
+                                            <span className="ml-2 text-sm dark:text-gray-300 text-gray-700">All Categories</span>
+                                        </label>
                                         {categories.map((category) => (
                                             <label key={category} className="flex items-center">
                                                 <input
@@ -145,16 +186,21 @@ const AllBooks = () => {
                                                     value={category}
                                                     checked={selectedCategory === category}
                                                     onChange={(e) => setSelectedCategory(e.target.value)}
-                                                    className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
+                                                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600"
                                                 />
-                                                <span className="ml-2 text-sm dark:text-gray-400 text-gray-600">{category}</span>
+                                                <span className="ml-2 text-sm dark:text-gray-300 text-gray-700">{category}</span>
                                             </label>
                                         ))}
                                     </div>
                                 </div>
                                 <div className="mb-6">
-                                    <h3 className="text-sm font-medium text-gray-700 mb-2 dark:text-gray-300">Status</h3>
-                                    <div className="space-y-2">
+                                    <h3 className="text-sm font-medium text-gray-700 mb-3 dark:text-gray-300 flex items-center gap-2">
+                                        <span className="w-6 h-6 flex items-center justify-center bg-blue-600 dark:bg-blue-700 text-white rounded-full text-xs">
+                                            S
+                                        </span>
+                                        Status
+                                    </h3>
+                                    <div className="space-y-3 pl-2 border-l-2 border-blue-200 dark:border-blue-800">
                                         <label className="flex items-center">
                                             <input
                                                 type="radio"
@@ -162,9 +208,9 @@ const AllBooks = () => {
                                                 value="all"
                                                 checked={!showAvailable}
                                                 onChange={() => setShowAvailable(false)}
-                                                className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600"
                                             />
-                                            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">All Books</span>
+                                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">All Books</span>
                                         </label>
                                         <label className="flex items-center">
                                             <input
@@ -173,23 +219,28 @@ const AllBooks = () => {
                                                 value="available"
                                                 checked={showAvailable}
                                                 onChange={() => setShowAvailable(true)}
-                                                className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
+                                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600"
                                             />
-                                            <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">Available Books</span>
+                                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">Available Books</span>
                                         </label>
                                     </div>
                                 </div>
                                 <div className="mb-6">
-                                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by Letter</h3>
-                                    <div className="flex flex-wrap gap-1">
+                                    <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3 flex items-center gap-2">
+                                        <span className="w-6 h-6 flex items-center justify-center bg-blue-600 dark:bg-blue-700 text-white rounded-full text-xs">
+                                            A
+                                        </span>
+                                        Filter by Letter
+                                    </h3>
+                                    <div className="flex flex-wrap gap-1.5">
                                         {alphabets.map((letter) => (
                                             <button
                                                 key={letter}
                                                 onClick={() => setSelectedLetter(selectedLetter === letter ? '' : letter)}
-                                                className={`w-7 h-7 text-sm font-medium rounded-md flex items-center justify-center
-                      ${selectedLetter === letter
-                                                        ? 'bg-blue-500 text-white'
-                                                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200'}`}
+                                                className={`w-7 h-7 text-sm font-medium rounded-md flex items-center justify-center transition-all duration-200
+                                                    ${selectedLetter === letter
+                                                        ? 'bg-blue-600 text-white shadow-md'
+                                                        : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
                                             >
                                                 {letter}
                                             </button>
@@ -200,16 +251,17 @@ const AllBooks = () => {
                         </div>
                     </div>
                     <div className="flex-1">
-                        <div className="mb-6 flex items-center justify-between">
-                            <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-[#1A365D]">
+                        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                            <h1 className="text-3xl font-bold text-gray-800 dark:text-white relative inline-block">
                                 All Books
+                                <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-blue-600 dark:bg-blue-500"></span>
                             </h1>
-                            <div className="flex gap-2">
+                            <div className="flex gap-2 bg-white dark:bg-gray-800 p-1 rounded-lg shadow-md border border-blue-100 dark:border-blue-900">
                                 <button
                                     onClick={() => setViewType('grid')}
-                                    className={`p-2 rounded-md ${viewType === 'grid'
-                                        ? 'bg-blue-500 text-white'
-                                        : 'bg-gray-100 dark:bg-gray-600 dark:text-gray-300 text-gray-600 hover:bg-gray-200'}`}
+                                    className={`p-2 rounded-md transition-all duration-200 ${viewType === 'grid'
+                                        ? 'bg-blue-600 text-white shadow-md'
+                                        : 'bg-transparent text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
@@ -217,9 +269,9 @@ const AllBooks = () => {
                                 </button>
                                 <button
                                     onClick={() => setViewType('list')}
-                                    className={`p-2 rounded-md ${viewType === 'list'
-                                        ? 'bg-blue-500 text-white'
-                                        : 'bg-gray-100 dark:bg-gray-600 dark:text-gray-300 text-gray-600 hover:bg-gray-200'}`}
+                                    className={`p-2 rounded-md transition-all duration-200 ${viewType === 'list'
+                                        ? 'bg-blue-600 text-white shadow-md'
+                                        : 'bg-transparent text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
                                 >
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -228,272 +280,322 @@ const AllBooks = () => {
                             </div>
                         </div>
 
-                        {loading ? (<div className="flex justify-center items-center h-48">
-                            <TailSpin
-                                visible={true}
-                                height="80"
-                                width="80"
-                                color="#4fa94d"
-                                ariaLabel="tail-spin-loading"
-                                radius="1"
-                            />
-                        </div>) : (viewType === "grid" ? (sortedAndFilteredBooks.length === 0 ? (<div className='text-center py-10
-                                '><Typewriter
-                                words={["No Books to show right now"]}
-                                loop=""
-                                cursor
-                                cursorStyle='_'
-                                typeSpeed={70}
-                                deleteSpeed={50}
-                                delaySpeed={1000}
-                            /></div>) : (<div><div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-                                {sortedAndFilteredBooks.map((book) => (
-                                    <div>
-                                        <div
-                                            key={book._id}
-                                            className="bg-white dark:bg-gray-800 sm:rounded-b-none rounded-lg shadow-md overflow-hidden"
-                                        >
-                                            <div className="w-full">
-                                                <img
-                                                    src={book.image}
-                                                    alt={book.name}
-                                                    className={`w-full h-48 object-cover`}
-                                                />
-                                            </div>
-                                            <div className='flex flex-col justify-between'>
-                                                <div className="p-4 flex flex-col flex-1">
-                                                    <h3 className="text-lg dark:text-gray-300 font-semibold text-gray-800 mb-2">{book.name}</h3>
-                                                    <p className="text-gray-600 mb-2 dark:text-gray-400">by {book.author_name}</p>
-                                                    <div className="flex items-center mb-2">
-                                                        {[...Array(5)].map((_, index) => (
-                                                            <svg
-                                                                key={index}
-                                                                className={`w-5 h-5 ${index < Math.floor(book.rating)
-                                                                    ? 'text-yellow-400'
-                                                                    : 'text-gray-300'}`}
-                                                                fill="currentColor"
-                                                                viewBox="0 0 20 20"
-                                                            >
-                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                            </svg>
-                                                        ))}
-                                                        <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">({book.rating})</span>
-                                                    </div>
-                                                    <div className='flex items-center gap-5'>
-                                                        <span className="text-sm text-blue-500">{book.category}</span>
-                                                        <span
-                                                            className="inline-flex items-center w-14 justify-center rounded-full border border-blue-500 px-2.5 py-0.5 text-blue-700"
-                                                        >
-                                                            <svg
-                                                                xmlns="http://www.w3.org/2000/svg"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                strokeWidth="1.5"
-                                                                stroke="currentColor"
-                                                                className="-ms-1 me-1.5 size-4"
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                                                />
-                                                            </svg>
-
-                                                            <p className="whitespace-nowrap text-sm">{book.quantity}</p>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div className="flex gap-3 mt-4 justify-center pb-5 px-4 sm:pb-0 sm:px-0 sm:flex-row sm:items-end sm:justify-end">
-                                                    <NavLink to={`/book/${book._id}`}
-                                                        className="block bg-blue-500 px-5 py-3 w-full sm:w-auto text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
-                                                    >
-                                                        Details
-                                                    </NavLink>
-                                                    <button onClick={() => openModal(book)}
-                                                        className="block bg-blue-500 px-5 py-3 w-full sm:w-auto text-center text-xs font-bold uppercase text-white transition hover:bg-blue-600"
-                                                    >
-                                                        Update
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                        {loading ? (
+                            <div className="flex justify-center items-center h-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
+                                <TailSpin
+                                    visible={true}
+                                    height="80"
+                                    width="80"
+                                    color="#2563EB"
+                                    ariaLabel="tail-spin-loading"
+                                    radius="1"
+                                />
+                            </div>
+                        ) : viewType === "grid" ? (
+                            sortedAndFilteredBooks.length === 0 ? (
+                                <div className="text-center py-16 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                                    <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+                                        <FaSearch className="text-4xl text-blue-600 dark:text-blue-400" />
                                     </div>
-                                ))}
-                            </div></div>)) : (<div className="overflow-x-auto">
-
-                                {sortedAndFilteredBooks.length === 0 ? (<div className='text-center py-10
-                                '><Typewriter
-                                        words={["No Books to show right now"]}
-                                        loop={true}
-                                        cursor
-                                        cursorStyle='_'
-                                        typeSpeed={70}
-                                        deleteSpeed={50}
-                                        delaySpeed={1000}
-                                    /></div>) : (<div><table className="min-w-full table-auto border-collapse border border-gray-200 dark:border-gray-600">
-                                        <thead className="bg-gray-200 dark:bg-gray-700">
-                                            <tr>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Image</th>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Name</th>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Author</th>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Category</th>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Rating</th>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Quantity</th>
-                                                <th className="border border-gray-300 dark:border-gray-600 px-4 py-2 text-left">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {sortedAndFilteredBooks.map((book) => (
-                                                <tr key={book._id} className="even:bg-gray-100 dark:even:bg-gray-800">
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                                        <img src={book.image} alt={book.name} className="w-16 h-16 object-cover rounded-md" />
-                                                    </td>
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{book.name}</td>
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{book.author_name}</td>
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{book.category}</td>
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                                        {[...Array(5)].map((_, index) => (
-                                                            <svg
-                                                                key={index}
-                                                                className={`inline-block w-4 h-4 ${index < Math.floor(book.rating)
-                                                                    ? 'text-yellow-400'
-                                                                    : 'text-gray-300'}`}
-                                                                fill="currentColor"
-                                                                viewBox="0 0 20 20"
-                                                            >
-                                                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                                            </svg>
-                                                        ))}
-                                                        <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">({book.rating})</span>
-                                                    </td>
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">{book.quantity}</td>
-                                                    <td className="border border-gray-300 dark:border-gray-600 px-4 py-2">
-                                                        <div className="flex gap-2">
-                                                            <NavLink
-                                                                to={`/book/${book._id}`}
-                                                                className="bg-blue-500 text-white px-2 py-1 rounded text-sm"
-                                                            >
-                                                                Details
-                                                            </NavLink>
-                                                            <button onClick={() => openModal(book)} className="bg-blue-500 text-white px-2 py-1 rounded text-sm">Update</button>
+                                    <div className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                                        <Typewriter
+                                            words={["No Books to show right now"]}
+                                            loop=""
+                                            cursor
+                                            cursorStyle='_'
+                                            typeSpeed={70}
+                                            deleteSpeed={50}
+                                            delaySpeed={1000}
+                                        />
+                                    </div>
+                                    <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                                        Try adjusting your filters or check back later for new additions to our library.
+                                    </p>
+                                </div>
+                            ) : (
+                                <div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {sortedAndFilteredBooks.map((book) => (
+                                            <div key={book._id} className="group">
+                                                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-blue-100 dark:border-blue-900 transition-all duration-300 hover:shadow-xl hover:translate-y-[-5px]">
+                                                    <div className="relative">
+                                                        <img
+                                                            src={book.image || "/placeholder.svg"}
+                                                            alt={book.name}
+                                                            className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+                                                        />
+                                                        <div className="absolute top-0 right-0 bg-blue-600 text-white px-3 py-1 m-2 rounded-full text-sm font-bold">
+                                                            {book.quantity} left
                                                         </div>
-                                                    </td>
+                                                    </div>
+                                                    <div className="p-5">
+                                                        <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2 line-clamp-1">{book.name}</h3>
+                                                        <p className="text-blue-600 dark:text-blue-400 mb-3 font-medium">by {book.author_name}</p>
+                                                        <div className="flex items-center mb-3">
+                                                            {[...Array(5)].map((_, index) => (
+                                                                <svg
+                                                                    key={index}
+                                                                    className={`w-5 h-5 ${index < Math.floor(book.rating)
+                                                                        ? 'text-yellow-400'
+                                                                        : 'text-gray-300 dark:text-gray-600'}`}
+                                                                    fill="currentColor"
+                                                                    viewBox="0 0 20 20"
+                                                                >
+                                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                </svg>
+                                                            ))}
+                                                            <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">({book.rating})</span>
+                                                        </div>
+                                                        <div className="flex items-center gap-3 mb-4">
+                                                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium">
+                                                                {book.category}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex gap-2 p-5 pt-0">
+                                                        <NavLink 
+                                                            to={`/book/${book._id}`}
+                                                            className="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:bg-blue-700 hover:shadow-lg"
+                                                        >
+                                                            Details
+                                                        </NavLink>
+                                                        <button 
+                                                            onClick={() => openModal(book)}
+                                                            className="flex-1 bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-500 px-4 py-2.5 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:bg-blue-50 dark:hover:bg-gray-600"
+                                                        >
+                                                            Update
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )
+                        ) : (
+                            <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
+                                {sortedAndFilteredBooks.length === 0 ? (
+                                    <div className="text-center py-16">
+                                        <div className="w-24 h-24 mx-auto mb-6 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900">
+                                            <FaSearch className="text-4xl text-blue-600 dark:text-blue-400" />
+                                        </div>
+                                        <div className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                                            <Typewriter
+                                                words={["No Books to show right now"]}
+                                                loop={true}
+                                                cursor
+                                                cursorStyle='_'
+                                                typeSpeed={70}
+                                                deleteSpeed={50}
+                                                delaySpeed={1000}
+                                            />
+                                        </div>
+                                        <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+                                            Try adjusting your filters or check back later for new additions to our library.
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <table className="min-w-full table-auto border-collapse">
+                                            <thead className="bg-blue-50 dark:bg-blue-900/30">
+                                                <tr>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Image</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Name</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Author</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Category</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Rating</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Quantity</th>
+                                                    <th className="px-6 py-4 text-left text-sm font-semibold text-gray-700 dark:text-gray-300">Actions</th>
                                                 </tr>
-                                            ))}
-                                        </tbody>
-                                    </table></div>)}
-
-                            </div>)
-
+                                            </thead>
+                                            <tbody className="divide-y divide-blue-100 dark:divide-blue-900">
+                                                {sortedAndFilteredBooks.map((book) => (
+                                                    <tr key={book._id} className="hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-150">
+                                                        <td className="px-6 py-4">
+                                                            <img src={book.image || "/placeholder.svg"} alt={book.name} className="w-16 h-20 object-cover rounded-md shadow-sm" />
+                                                        </td>
+                                                        <td className="px-6 py-4 font-medium text-gray-800 dark:text-white">{book.name}</td>
+                                                        <td className="px-6 py-4 text-gray-600 dark:text-gray-400">{book.author_name}</td>
+                                                        <td className="px-6 py-4">
+                                                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium">
+                                                                {book.category}
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex items-center">
+                                                                {[...Array(5)].map((_, index) => (
+                                                                    <svg
+                                                                        key={index}
+                                                                        className={`inline-block w-4 h-4 ${index < Math.floor(book.rating)
+                                                                            ? 'text-yellow-400'
+                                                                            : 'text-gray-300 dark:text-gray-600'}`}
+                                                                        fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                    >
+                                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                    </svg>
+                                                                ))}
+                                                                <span className="ml-2 text-gray-600 dark:text-gray-400 text-sm">({book.rating})</span>
+                                                            </div>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 rounded-full text-xs font-medium">
+                                                                {book.quantity} left
+                                                            </span>
+                                                        </td>
+                                                        <td className="px-6 py-4">
+                                                            <div className="flex gap-2">
+                                                                <NavLink
+                                                                    to={`/book/${book._id}`}
+                                                                    className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-blue-700"
+                                                                >
+                                                                    Details
+                                                                </NavLink>
+                                                                <button 
+                                                                    onClick={() => openModal(book)} 
+                                                                    className="bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-500 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-blue-50 dark:hover:bg-gray-600"
+                                                                >
+                                                                    Update
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                )}
+                            </div>
                         )}
-                        <div className='flex justify-center mt-5 items-center gap-5 dark:bg-gray-800 bg-white p-2 shadow-lg rounded-md w-fit mx-auto select-none'>
-                            {/* left arrow */}
-                            <div onClick={() => { updatePageNumber(pageNumber - 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
-                                PREV
-                            </div>
-                            <div className='flex justify-center items-center gap-2 '>
-                                {[...Array(page).keys()].map((item, ind) => <div key={item} onClick={() => { setPageNumber(item) }} className={`cursor-pointer hover:scale-110  border-b-2  text-sm scale-100 transition-all duration-200 px-3 ${pageNumber === item ? 'border-sky-300' : 'border-white'}   font-semibold text-gray-700 dark:text-gray-400    py-[6px] `} >
-                                    {item + 1}
-                                </div>)}
-                            </div>
-                            {/* right arrow */}
-                            <div onClick={() => { updatePageNumber(pageNumber + 1) }} className='text-[12px] cursor-pointer font-semibold px-1 py-1'>
-                                NEXT
+                        
+                        <div className="flex justify-center mt-8">
+                            <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-3 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
+                                <button 
+                                    onClick={() => { updatePageNumber(pageNumber - 1) }} 
+                                    className="text-sm font-semibold px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
+                                >
+                                    PREV
+                                </button>
+                                <div className="flex items-center gap-1 px-2">
+                                    {[...Array(page).keys()].map((item) => (
+                                        <button 
+                                            key={item} 
+                                            onClick={() => { setPageNumber(item) }} 
+                                            className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all duration-200 text-sm font-medium
+                                                ${pageNumber === item 
+                                                    ? 'bg-blue-600 text-white shadow-md' 
+                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
+                                        >
+                                            {item + 1}
+                                        </button>
+                                    ))}
+                                </div>
+                                <button 
+                                    onClick={() => { updatePageNumber(pageNumber + 1) }} 
+                                    className="text-sm font-semibold px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
+                                >
+                                    NEXT
+                                </button>
                             </div>
                         </div>
                     </div>
+                    
                     {isModalOpen && (
-                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-                            <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-full max-w-md max-h-full overflow-y-auto">
-                                <h2 className="text-xl font-bold mb-4">Update Book</h2>
-                                <form onSubmit={handleUpdate}>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Image URL</label>
+                        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+                            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-blue-200 dark:border-blue-900">
+                                <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white flex items-center gap-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                    Update Book
+                                </h2>
+                                <form onSubmit={handleUpdate} className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Image URL</label>
                                         <input
                                             type="text"
                                             name="image"
                                             value={updatedBook.image || ''}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                         />
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Name</label>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Name</label>
                                         <input
                                             type="text"
                                             name="name"
                                             value={updatedBook.name || ''}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                             required
                                         />
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Author</label>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Author</label>
                                         <input
                                             type="text"
                                             name="author_name"
                                             value={updatedBook.author_name || ''}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                             required
                                         />
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Category</label>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
                                         <input
                                             type="text"
                                             name="category"
                                             value={updatedBook.category || ''}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                         />
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Short Description</label>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Short Description</label>
                                         <textarea
                                             name="short_description"
                                             value={updatedBook.short_description || ""}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                             rows="3"
                                         />
                                     </div>
-                                    <div className="mb-4">
-                                        <label className="block text-sm font-medium mb-1">Book Content</label>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Book Content</label>
                                         <textarea
                                             name="book_content"
                                             value={updatedBook.book_content || ""}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                             rows="3"
                                         />
                                     </div>
-                                    <div className="mb-4 ">
-                                        <label className="block text-sm font-medium mb-1">Rating</label>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Rating</label>
                                         <input
                                             type="number"
                                             name="rating"
                                             value={updatedBook.rating || ''}
                                             onChange={handleInputChange}
-                                            className="w-full px-3 py-2 border rounded-md"
+                                            className="w-full px-4 py-2.5 border border-blue-200 dark:border-blue-900 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-800 dark:text-white"
                                             min="0"
                                             max="5"
                                             step="0.1"
                                         />
                                     </div>
-                                    <div className="flex justify-end mt-5 gap-2 sticky bottom-0 bg-white dark:bg-gray-800 p-4">
+                                    <div className="flex justify-end gap-3 pt-4 border-t border-blue-100 dark:border-blue-900">
                                         <button
                                             type="button"
                                             onClick={() => setIsModalOpen(false)}
-                                            className="px-4 py-2 dark:bg-gray-700 bg-gray-300 rounded-md"
+                                            className="px-5 py-2.5 bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
                                         >
                                             Cancel
                                         </button>
                                         <button
                                             type="submit"
-                                            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                                            className="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 shadow-md"
                                         >
                                             Update
                                         </button>
@@ -501,7 +603,6 @@ const AllBooks = () => {
                                 </form>
                             </div>
                         </div>
-
                     )}
                 </div>
             </div>

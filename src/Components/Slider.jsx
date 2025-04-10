@@ -128,7 +128,7 @@ const Slider = () => {
             className="relative min-w-full h-[40rem] sm:h-96 md:h-[30rem] lg:h-[52rem]"
             style={{ backgroundImage: `url(${slide.image})`, backgroundSize: "cover", backgroundPosition: "center" }}
           >
-            <div className="absolute inset-0 bg-blue-950/60 dark:bg-blue-950/70">
+            <div className="absolute inset-0 bg-gray-950/60 dark:bg-gray-950/70">
               <div className="absolute flex items-center h-full justify-center lg:justify-start md:justify-center inset-0">
                 <div className="lg:ml-[8rem] p-8 md:p-14 max-w-3xl">
                   <div
