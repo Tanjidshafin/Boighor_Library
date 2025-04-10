@@ -139,7 +139,7 @@ const NavBar = () => {
               <div className="flex items-center">
                 <motion.button
                   onClick={toggleDarkMode}
-                  className={`p-2 rounded-full ${isDarkMode ? "bg-gray-800" : "bg-gray-200 text-gray-500"} mr-4`}
+                  className={`p-2 rounded-full ${isDarkMode ? "bg-gray-800" : "bg-gray-200 text-gray-500"} mr-2`}
                   whileTap={{ scale: 0.95 }}
                   whileHover={{ scale: 1.05 }}
                 >
@@ -156,7 +156,7 @@ const NavBar = () => {
                   </AnimatePresence>
                 </motion.button>
                 {user ? (
-                  <div className="flex items-center space-x-4">
+                  <div className="flex items-center space-x-4 mr-2">
                     <img
                       src={
                         user.photoURL ||
@@ -176,7 +176,7 @@ const NavBar = () => {
                     </button>
                   </div>
                 ) : (
-                  <div className="hidden md:flex space-x-4">
+                  <div className="hidden md:flex space-x-4 mr-2">
                     <NavLink
                       to="/login"
                       className={`border border-blue-300 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-800 

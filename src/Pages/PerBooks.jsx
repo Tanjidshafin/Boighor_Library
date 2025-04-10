@@ -49,7 +49,7 @@ const PerBooks = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl text-center">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl text-center">
           <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-700 dark:text-gray-300 text-lg">Loading book details...</p>
         </div>
@@ -60,7 +60,7 @@ const PerBooks = () => {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl text-center max-w-md">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl text-center max-w-md">
           <div className="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <FaInfoCircle className="text-red-600 dark:text-red-400 text-2xl" />
           </div>
@@ -80,7 +80,7 @@ const PerBooks = () => {
   if (!book) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white dark:bg-gray-900">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-xl shadow-xl text-center max-w-md">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl text-center max-w-md">
           <div className="w-16 h-16 bg-yellow-100 dark:bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
             <FaInfoCircle className="text-yellow-600 dark:text-yellow-400 text-2xl" />
           </div>
@@ -98,10 +98,10 @@ const PerBooks = () => {
   }
 
   return (
-    <div className="mx-auto max-w-screen-xl mt-20 px-4 py-12">
-      <div className="flex flex-col justify-center lg:flex-row gap-8">
+    <div className="mx-auto max-w-screen-xl mt-20 px-1 py-12">
+      <div className="flex flex-col justify-center lg:flex-row gap-6">
         <div className="lg:w-2/5">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 border border-blue-100 dark:border-blue-900">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-3 hover:shadow-xl transition-all duration-300 border border-blue-100 dark:border-blue-900">
             <div className="relative">
               <img
                 src={book.image || "/placeholder.svg"}
@@ -149,7 +149,7 @@ const PerBooks = () => {
         </div>
 
         <div className="lg:w-3/5">
-          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 border border-blue-100 dark:border-blue-900">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-blue-100 dark:border-blue-900">
             <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-2">{book.name}</h1>
             <p className="text-xl text-blue-600 dark:text-blue-400 mb-4 font-medium">by {book.author_name}</p>
 

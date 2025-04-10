@@ -33,7 +33,7 @@ const BorrowedBooks = () => {
       <section className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/5.jpg)] bg-cover bg-center bg-no-repeat">
         <div className="absolute inset-0 bg-gray-900/80 dark:bg-gray-950/90"></div>
 
-        <div className="relative mx-auto md:h-[30rem] justify-center items-center max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
+        <div className="relative mx-auto md:h-[30rem] justify-center items-center max-w-screen-xl px-2 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
           <div className="max-w-xl flex justify-center items-center text-center">
             <h1 className="text-3xl flex flex-col md:flex-row items-center text-white gap-3 font-extrabold sm:text-5xl">
               BORROWED
@@ -57,7 +57,7 @@ const BorrowedBooks = () => {
         </div>
       </section>
 
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-2 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 relative inline-block">

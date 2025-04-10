@@ -99,7 +99,7 @@ const AllBooks = () => {
             <section className="relative bg-[url(https://htmldemo.net/boighor/boighor/images/bg/6.jpg)] bg-cover bg-center bg-no-repeat">
                 <div className="absolute inset-0 bg-gray-900/80 dark:bg-gray-950/90"></div>
 
-                <div className="relative mx-auto md:h-[30rem] justify-center items-center max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
+                <div className="relative mx-auto justify-center items-center max-w-screen-xl px-4 py-32 sm:px-6 flex flex-col gap-5 lg:items-center lg:px-8">
                     <div className="max-w-xl flex justify-center items-center text-center">
                         <h1 className="text-3xl flex flex-col md:flex-row items-center text-white gap-3 font-extrabold sm:text-5xl">
                             ALL
@@ -126,7 +126,7 @@ const AllBooks = () => {
                     </div>
                 </div>
             </section>
-            <div className="container mx-auto px-4 py-12">
+            <div className="container mx-auto px-2 py-12">
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="w-full md:w-64 shrink-0">
                         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
