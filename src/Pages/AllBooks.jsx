@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
-import { FaChevronRight, FaFilter, FaSearch, FaSort,FaStar,FaBookOpen } from 'react-icons/fa';
+import { FaChevronRight, FaFilter, FaSearch, FaSort } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -283,8 +283,8 @@ const AllBooks = () => {
                             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
                                 {[0, 1, 2, 3, 4, 5].map(card => (
                                     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-blue-100 dark:border-blue-900">
-                                        <div className="relative aspect-[3/4]">
-                                            <div className="w-full h-[31rem] bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                                        <div className="relative">
+                                            <div className="w-full h-56 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
                                             <div className="absolute top-0 right-0 bg-gray-300 dark:bg-gray-600 px-3 py-1 m-2 rounded-full w-16 h-6 animate-pulse"></div>
                                         </div>
                                         <div className="p-5">
@@ -335,54 +335,141 @@ const AllBooks = () => {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {sortedAndFilteredBooks.map((book) => (
                                             <motion.div
-                                                key={book._id}
-                                                whileHover={{ y: -10 }}
+                                                className="group h-full"
+                                                initial={{ opacity: 0, y: 20 }}
+                                                animate={{ opacity: 1, y: 0 }}
                                                 transition={{ duration: 0.3 }}
-                                                className="relative bg-white dark:bg-gray-900 rounded-xl shadow-xl overflow-hidden border border-blue-100 dark:border-blue-900 h-full flex flex-col"
+                                                whileHover={{
+                                                    y: -10,
+                                                    transition: { duration: 0.2 },
+                                                }}
                                             >
-                                                <div className="absolute top-0 right-0 bg-blue-600 text-white px-4 py-2 rounded-bl-xl font-bold z-10">
-                                                    {book.quantity} left
-                                                </div>
+                                                <div className="relative h-full bg-gradient-to-br from-white to-blue-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg overflow-hidden border border-blue-100/50 dark:border-blue-900/30 transition-all duration-300 hover:shadow-2xl">
+                                                    {/* Image container */}
+                                                    <div className="relative h-64 overflow-hidden">
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                                                <div className="p-4">
-                                                    <div className="relative aspect-[3/4] rounded-xl overflow-hidden shadow-lg mb-4">
-                                                        <img
+                                                        <motion.img
                                                             src={book.image || "/placeholder.svg"}
                                                             alt={book.name}
-                                                            className="object-cover w-full h-full transition-transform duration-500 hover:scale-110"
+                                                            className="w-full h-full object-cover"
+                                                            animate={{
+                                                                scale: 1,
+                                                            }}
+                                                            transition={{ duration: 0.5 }}
                                                         />
-                                                        <div className="absolute inset-0 bg-blue-950/60 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+
+                                                        {/* Quantity badge */}
+                                                        <div className="absolute top-0 right-0 z-20 m-3">
+                                                            <motion.div
+                                                                className={`px-3 py-1 rounded-full text-sm font-bold backdrop-blur-md shadow-lg
+                                                       ${book.quantity <= 3
+                                                                        ? "bg-red-500/80 text-white"
+                                                                        : book.quantity <= 10
+                                                                            ? "bg-amber-500/80 text-white"
+                                                                            : "bg-emerald-500/80 text-white"
+                                                                    }`}
+                                                                whileHover={{ scale: 1.05 }}
+                                                                whileTap={{ scale: 0.95 }}
+                                                            >
+                                                                {book.quantity <= 3 ? `Only ${book.quantity} left!` : `${book.quantity} available`}
+                                                            </motion.div>
+                                                        </div>
+
+                                                        {/* Category tag */}
+                                                        <motion.div
+                                                            className="absolute bottom-0 left-0 z-20 m-3"
+                                                            initial={{ opacity: 0, y: 10 }}
+                                                            animate={{ opacity: 1, y: 0 }}
+                                                            transition={{ delay: 0.1 }}
+                                                        >
+                                                            <span className="px-3 py-1 bg-white/80 dark:bg-gray-900/80 text-blue-600 dark:text-blue-400 backdrop-blur-md rounded-full text-xs font-medium shadow-lg">
+                                                                {book.category}
+                                                            </span>
+                                                        </motion.div>
+                                                    </div>
+
+                                                    {/* Content */}
+                                                    <div className="p-5 relative z-10">
+                                                        {/* Title and author */}
+                                                        <div className="mb-3">
+                                                            <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-1 line-clamp-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                                                {book.name}
+                                                            </h3>
+                                                            <p className="text-blue-600 dark:text-blue-400 font-medium flex items-center">
+                                                                <span className="inline-block w-8 h-0.5 bg-blue-600/30 dark:bg-blue-400/30 mr-2"></span>
+                                                                by {book.author_name}
+                                                            </p>
+                                                        </div>
+
+                                                        {/* Rating */}
+                                                        <div className="flex items-center mb-4">
+                                                            <div className="flex mr-2">
+                                                                {[...Array(5)].map((_, index) => (
+                                                                    <motion.svg
+                                                                        key={index}
+                                                                        className={`w-5 h-5 ${index < Math.floor(book.rating) ? "text-amber-400" : "text-gray-300 dark:text-gray-600"
+                                                                            }`}
+                                                                        fill="currentColor"
+                                                                        viewBox="0 0 20 20"
+                                                                        initial={{ rotateY: 90 }}
+                                                                        animate={{ rotateY: 0 }}
+                                                                        transition={{ delay: 0.1 * index, duration: 0.3 }}
+                                                                    >
+                                                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                    </motion.svg>
+                                                                ))}
+                                                            </div>
+                                                            <div className="flex items-center">
+                                                                <span className="text-gray-700 dark:text-gray-300 font-bold text-lg">{book.rating}</span>
+                                                                <span className="text-gray-500 dark:text-gray-400 text-xs ml-1">/5</span>
+                                                            </div>
+                                                        </div>
+
+                                                        {/* Book details preview */}
+                                                        <div className="mb-4">
+                                                            <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                                                                <span>Pages</span>
+                                                                <span className="font-medium">{book.pages || 320}</span>
+                                                            </div>
+                                                            <div className="w-full h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                                                <motion.div
+                                                                    className="h-full bg-gradient-to-r from-blue-500 to-blue-500"
+                                                                    initial={{ width: 0 }}
+                                                                    animate={{ width: `${Math.min(100, (book.pages || 320) / 5)}%` }}
+                                                                    transition={{ duration: 1, delay: 0.3 }}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Action buttons */}
+                                                    <div className="p-5 pt-0 relative z-10">
+                                                        <div className="flex gap-3">
                                                             <NavLink
                                                                 to={`/book/${book._id}`}
-                                                                className="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition duration-300 transform hover:scale-105 shadow-lg"
+                                                                className="flex-1 relative overflow-hidden group/btn bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 text-white px-4 py-3 rounded-xl text-center font-medium shadow-lg transition-all duration-200 hover:shadow-blue-500/20 dark:hover:shadow-blue-700/20 hover:shadow-xl"
                                                             >
-                                                                View Details
+                                                                <span className="relative z-10">Details</span>
+                                                                <motion.span
+                                                                    className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600"
+                                                                    initial={{ x: "-100%" }}
+                                                                    whileHover={{ x: 0 }}
+                                                                    transition={{ duration: 0.3 }}
+                                                                />
                                                             </NavLink>
+
+                                                            <motion.button
+                                                                onClick={() => openModal(book)}
+                                                                whileHover={{ scale: 1.03 }}
+                                                                whileTap={{ scale: 0.97 }}
+                                                                className="flex-1 bg-white dark:bg-gray-800 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800 px-4 py-3 rounded-xl text-center font-medium shadow-sm transition-all duration-200 hover:border-blue-400 dark:hover:border-blue-600 hover:shadow-md"
+                                                            >
+                                                                Update
+                                                            </motion.button>
                                                         </div>
-                                                    </div>
-
-                                                    <div className="flex items-center mb-4">
-                                                        <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full mr-2">
-                                                            {book.category}
-                                                        </span>
-                                                        <div className="flex items-center text-yellow-500 dark:text-yellow-400">
-                                                            <FaStar className="mr-1" />
-                                                            <span className="font-semibold">{book.rating}</span>
-                                                        </div>
-                                                    </div>
-
-                                                    <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2 line-clamp-2">{book.name}</h3>
-                                                    <p className="text-blue-600 dark:text-blue-400 font-medium mb-2">{book.author_name}</p>
-
-                                                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 text-sm">{book.book_content}</p>
-
-                                                    <div className="flex items-center text-blue-500 dark:text-blue-400 mt-auto">
-                                                        <FaBookOpen className="mr-2" />
-                                                        <span className="font-medium">Click to explore</span>
                                                     </div>
                                                 </div>
-
-                                                <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 dark:bg-blue-500"></div>
                                             </motion.div>
                                         ))}
                                     </div>
@@ -518,7 +605,7 @@ const AllBooks = () => {
 
                     {isModalOpen && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-                            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-blue-200 dark:border-blue-900">
+                            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto border border-blue-200 dark:border-blue-900">
                                 <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white flex items-center gap-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
