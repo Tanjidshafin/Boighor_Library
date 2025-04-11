@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router';
 import { AppContext } from '../Context/AppContext';
 import { FaChevronRight, FaFilter, FaSearch, FaSort } from 'react-icons/fa';
-import { TailSpin } from 'react-loader-spinner';
 import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify';
 import axios from 'axios';
@@ -130,8 +129,8 @@ const AllBooks = () => {
                 <div className="flex flex-col md:flex-row gap-8">
                     <div className="w-full md:w-64 shrink-0">
                         <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
-                            <button 
-                                onClick={filterToggle} 
+                            <button
+                                onClick={filterToggle}
                                 className="text-xl flex items-center gap-2 font-bold text-gray-800 dark:text-white mb-4 w-full justify-between"
                             >
                                 <div className="flex items-center gap-2">
@@ -144,7 +143,7 @@ const AllBooks = () => {
                             </button>
                             <div className={`${filter ? "block" : "hidden md:block"} space-y-6`}>
                                 <div className="my-6">
-                                    <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-gray-300 flex items-center gap-2">
+                                    <label className="text-sm font-medium text-gray-700 mb-2 dark:text-gray-300 flex items-center gap-2">
                                         <FaSort className="text-blue-600 dark:text-blue-400" />
                                         Sort By
                                     </label>
@@ -281,15 +280,34 @@ const AllBooks = () => {
                         </div>
 
                         {loading ? (
-                            <div className="flex justify-center items-center h-48 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-                                <TailSpin
-                                    visible={true}
-                                    height="80"
-                                    width="80"
-                                    color="#2563EB"
-                                    ariaLabel="tail-spin-loading"
-                                    radius="1"
-                                />
+                            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+                                {[0, 1, 2, 3, 4, 5].map(card => (
+                                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden border border-blue-100 dark:border-blue-900">
+                                        <div className="relative">
+                                            <div className="w-full h-56 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
+                                            <div className="absolute top-0 right-0 bg-gray-300 dark:bg-gray-600 px-3 py-1 m-2 rounded-full w-16 h-6 animate-pulse"></div>
+                                        </div>
+                                        <div className="p-5">
+                                            <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2 animate-pulse"></div>
+                                            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-3 animate-pulse"></div>
+                                            <div className="flex items-center mb-3">
+                                                <div className="flex space-x-1">
+                                                    {[...Array(5)].map((_, index) => (
+                                                        <div key={index} className="w-5 h-5 bg-gray-200 dark:bg-gray-700 rounded-full animate-pulse"></div>
+                                                    ))}
+                                                </div>
+                                                <div className="ml-2 h-4 bg-gray-200 dark:bg-gray-700 rounded w-8 animate-pulse"></div>
+                                            </div>
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <div className="px-3 py-1 bg-gray-200 dark:bg-gray-700 rounded-full w-20 h-6 animate-pulse"></div>
+                                            </div>
+                                        </div>
+                                        <div className="flex gap-2 p-5 pt-0">
+                                            <div className="flex-1 h-10 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"></div>
+                                            <div className="flex-1 h-10 bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse"></div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         ) : viewType === "grid" ? (
                             sortedAndFilteredBooks.length === 0 ? (
@@ -353,13 +371,13 @@ const AllBooks = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex gap-2 p-5 pt-0">
-                                                        <NavLink 
+                                                        <NavLink
                                                             to={`/book/${book._id}`}
                                                             className="flex-1 bg-blue-600 text-white px-4 py-2.5 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:bg-blue-700 hover:shadow-lg"
                                                         >
                                                             Details
                                                         </NavLink>
-                                                        <button 
+                                                        <button
                                                             onClick={() => openModal(book)}
                                                             className="flex-1 bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-500 px-4 py-2.5 rounded-lg text-center text-sm font-medium transition-all duration-200 hover:bg-blue-50 dark:hover:bg-gray-600"
                                                         >
@@ -451,8 +469,8 @@ const AllBooks = () => {
                                                                 >
                                                                     Details
                                                                 </NavLink>
-                                                                <button 
-                                                                    onClick={() => openModal(book)} 
+                                                                <button
+                                                                    onClick={() => openModal(book)}
                                                                     className="bg-white dark:bg-gray-700 text-blue-600 dark:text-blue-400 border border-blue-600 dark:border-blue-500 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200 hover:bg-blue-50 dark:hover:bg-gray-600"
                                                                 >
                                                                     Update
@@ -467,31 +485,31 @@ const AllBooks = () => {
                                 )}
                             </div>
                         )}
-                        
+
                         <div className="flex justify-center mt-8">
                             <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-3 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
-                                <button 
-                                    onClick={() => { updatePageNumber(pageNumber - 1) }} 
+                                <button
+                                    onClick={() => { updatePageNumber(pageNumber - 1) }}
                                     className="text-sm font-semibold px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
                                 >
                                     PREV
                                 </button>
                                 <div className="flex items-center gap-1 px-2">
                                     {[...Array(page).keys()].map((item) => (
-                                        <button 
-                                            key={item} 
-                                            onClick={() => { setPageNumber(item) }} 
+                                        <button
+                                            key={item}
+                                            onClick={() => { setPageNumber(item) }}
                                             className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all duration-200 text-sm font-medium
-                                                ${pageNumber === item 
-                                                    ? 'bg-blue-600 text-white shadow-md' 
+                                                ${pageNumber === item
+                                                    ? 'bg-blue-600 text-white shadow-md'
                                                     : 'text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
                                         >
                                             {item + 1}
                                         </button>
                                     ))}
                                 </div>
-                                <button 
-                                    onClick={() => { updatePageNumber(pageNumber + 1) }} 
+                                <button
+                                    onClick={() => { updatePageNumber(pageNumber + 1) }}
                                     className="text-sm font-semibold px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
                                 >
                                     NEXT
@@ -499,7 +517,7 @@ const AllBooks = () => {
                             </div>
                         </div>
                     </div>
-                    
+
                     {isModalOpen && (
                         <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
                             <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto border border-blue-200 dark:border-blue-900">
