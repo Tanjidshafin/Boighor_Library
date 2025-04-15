@@ -4,6 +4,7 @@ import { AppContext } from '../Context/AppContext';
 import { FaChevronRight, FaFilter, FaSearch, FaSort } from 'react-icons/fa';
 import { Typewriter } from 'react-simple-typewriter';
 import { toast } from 'react-toastify';
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 import axios from 'axios';
 import { motion } from 'framer-motion';
 const AllBooks = () => {
@@ -571,34 +572,36 @@ const AllBooks = () => {
                             </div>
                         )}
 
-                        <div className="flex justify-center mt-8">
-                            <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-3 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
-                                <button
-                                    onClick={() => { updatePageNumber(pageNumber - 1) }}
-                                    className="text-sm font-semibold px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
-                                >
-                                    PREV
-                                </button>
-                                <div className="flex items-center gap-1 px-2">
-                                    {[...Array(page).keys()].map((item) => (
-                                        <button
-                                            key={item}
-                                            onClick={() => { setPageNumber(item) }}
-                                            className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all duration-200 text-sm font-medium
+                        <div className='overflow-x-auto'>
+                            <div className="flex justify-center mt-8">
+                                <div className="flex items-center gap-2 bg-white dark:bg-gray-800 px-4 py-3 rounded-xl shadow-lg border border-blue-100 dark:border-blue-900">
+                                    <button
+                                        onClick={() => { updatePageNumber(pageNumber - 1) }}
+                                        className="text-sm font-semibold p-3 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
+                                    >
+                                        <MdKeyboardArrowLeft />
+                                    </button>
+                                    <div className="flex items-center gap-1 px-2">
+                                        {[...Array(page).keys()].map((item) => (
+                                            <button
+                                                key={item}
+                                                onClick={() => { setPageNumber(item) }}
+                                                className={`w-9 h-9 flex items-center justify-center rounded-lg transition-all duration-200 text-sm font-medium
                                                 ${pageNumber === item
-                                                    ? 'bg-blue-600 text-white shadow-md'
-                                                    : 'text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
-                                        >
-                                            {item + 1}
-                                        </button>
-                                    ))}
+                                                        ? 'bg-blue-600 text-white shadow-md'
+                                                        : 'text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-blue-900'}`}
+                                            >
+                                                {item + 1}
+                                            </button>
+                                        ))}
+                                    </div>
+                                    <button
+                                        onClick={() => { updatePageNumber(pageNumber + 1) }}
+                                        className="text-sm font-semibold p-3 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
+                                    >
+                                        <MdKeyboardArrowRight />
+                                    </button>
                                 </div>
-                                <button
-                                    onClick={() => { updatePageNumber(pageNumber + 1) }}
-                                    className="text-sm font-semibold px-4 py-2 rounded-lg bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-400 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors duration-200"
-                                >
-                                    NEXT
-                                </button>
                             </div>
                         </div>
                     </div>

@@ -100,13 +100,6 @@ const Blogs = () => {
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-16 sm:py-24">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 z-0 opacity-20 dark:opacity-10">
-        <div className="absolute -top-24 -left-24 w-72 h-72 bg-blue-300 dark:bg-blue-900 rounded-full filter blur-3xl"></div>
-        <div className="absolute top-1/2 right-0 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-blue-300 dark:bg-blue-900 rounded-full filter blur-3xl"></div>
-      </div>
-
       <div className="relative z-10 mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: -20 }}

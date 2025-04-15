@@ -1,15 +1,8 @@
 import image from "/books.png"
 const Subscribe = () => {
     return (
-        <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8 py-12">
+        <div className="mx-auto max-w-screen-xl px-2 sm:px-6 lg:px-8 py-12">
             <div className="rounded-2xl h-auto md:h-[30rem] p-8 lg:p-12 bg-white dark:bg-gray-900 flex flex-col md:flex-row items-center justify-between gap-8 shadow-2xl relative overflow-hidden">
-                {/* Background pattern */}
-                <div className="absolute inset-0 opacity-10">
-                    <div className="absolute -right-20 -top-20 w-64 h-64 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                    <div className="absolute -left-20 -bottom-20 w-64 h-64 rounded-full bg-gray-200 dark:bg-gray-700"></div>
-                    <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full bg-gray-100 dark:bg-gray-800"></div>
-                </div>
-
                 <img
                     className="w-full md:w-[28rem] mx-auto transition-transform duration-300 hover:scale-105 z-10 border-4 border-white dark:border-gray-800"
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXlmv7nGQtNP5PHKaPr619vslceRSr5Rqu7Q&s"
