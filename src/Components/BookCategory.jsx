@@ -52,7 +52,7 @@ const BookCategory = () => {
             <TailSpin visible={true} height="80" width="80" color="#2563EB" ariaLabel="tail-spin-loading" radius="1" />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {categories.map((category, index) => (
               <NavLink
                 key={index}
