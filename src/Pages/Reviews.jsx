@@ -149,7 +149,6 @@ const Reviews = () => {
       </motion.section>
 
       <div className="relative py-16 sm:py-24">
-        {/* Background decorative elements */}
         <div className="absolute inset-0 z-0 opacity-20 dark:opacity-10 overflow-hidden">
           <div className="absolute -top-24 -left-24 w-72 h-72 bg-blue-300 dark:bg-blue-900 rounded-full filter blur-3xl"></div>
           <div className="absolute top-1/2 right-0 w-80 h-80 bg-blue-300 dark:bg-blue-900 rounded-full filter blur-3xl"></div>

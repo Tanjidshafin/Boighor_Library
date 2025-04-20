@@ -60,9 +60,7 @@ const AddBook = () => {
     return (
         <div className="min-h-screen bg-blue-50 dark:bg-gray-900 py-12 px-2 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl">
-                {/* Replace gradient header with solid blue */}
                 <div className="relative py-8">
-                    {/* Remove the pattern background div */}
                     <h1 className="relative text-4xl md:text-5xl font-extrabold text-center text-gray-800 dark:text-gray-300">
                         <span className="">Add New</span>
                         <span className="ml-2 text-blue-500">Book</span>

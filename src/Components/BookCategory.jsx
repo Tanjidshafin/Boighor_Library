@@ -14,8 +14,6 @@ const BookCategory = () => {
       setLoading(false)
     }, 2000)
   }, [])
-
-  // Category icons mapping (you can replace these with actual icons if needed)
   const getCategoryIcon = (category) => {
     const icons = {
       Fiction: "📚",
@@ -26,7 +24,6 @@ const BookCategory = () => {
       History: "🏛️",
       Science: "🔬",
       Poetry: "📝",
-      // Add more categories as needed
     }
 
     return icons[category] || "📖"
